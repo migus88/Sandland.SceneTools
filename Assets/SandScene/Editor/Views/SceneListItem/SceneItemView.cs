@@ -38,6 +38,7 @@ namespace SandScene.Editor.Views
         {
             _sceneInfo = info;
             _button.text = _sceneInfo.Name;
+            _favoritesButton.Init(_sceneInfo);
             
             ResetInlineStyles();
         }

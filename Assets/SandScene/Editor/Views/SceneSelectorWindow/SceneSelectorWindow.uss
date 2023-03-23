@@ -49,11 +49,13 @@ LinkButton {
     flex-shrink: 1;
 }
 
-.favorites-button {
+#favorites-button {
     flex-direction: row-reverse;
     width: 50px;
     padding: 5px;
     padding-left: 0;
+}
+#favorites-button Image {
     cursor: link;
 }
 

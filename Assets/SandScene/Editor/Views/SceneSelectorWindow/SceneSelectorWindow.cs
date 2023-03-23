@@ -45,10 +45,20 @@ namespace SandScene.Editor.Views
             Init();
         }
 
+        private void OnEnable()
+        {
+            FavoritesService.FavoritesChanged += OnFavoritesChanged;
+        }
+
+        private void OnDisable()
+        {
+            FavoritesService.FavoritesChanged -= OnFavoritesChanged;
+        }
+
         private void Init()
         {
             _sceneInfos = AssetDatabaseUtils.FindScenes();
-            _filteredSceneInfos = _sceneInfos;
+            _filteredSceneInfos = GetFilteredSceneInfos();
 
             _sceneList = rootVisualElement.Q<ListView>("scenes-list");
             _sceneList.makeItem = () => new SceneItemView();
@@ -60,15 +70,30 @@ namespace SandScene.Editor.Views
             _searchField.Focus();
         }
 
-        private void OnSearchValueChanged(ChangeEvent<string> @event)
-        {
-            var filter = @event.newValue;
+        private void OnSearchValueChanged(ChangeEvent<string> @event) => RebuildItems(@event.newValue);
 
-            _filteredSceneInfos = string.IsNullOrWhiteSpace(filter)
-                ? _sceneInfos
-                : _sceneInfos.Where(s => s.Name.ToUpper().Contains(filter.ToUpper())).ToArray();
+        private void OnFavoritesChanged() => RebuildItems();
+
+        private void RebuildItems(string filter = null)
+        {
+            _filteredSceneInfos = GetFilteredSceneInfos(filter);
             _sceneList.itemsSource = _filteredSceneInfos;
             _sceneList.Rebuild();
+        }
+
+        private AssetFileInfo[] GetFilteredSceneInfos(string filter = null)
+        {
+            if (string.IsNullOrWhiteSpace(filter))
+            {
+                return _sceneInfos
+                    .OrderByFavorites()
+                    .ToArray();
+            }
+
+            return _sceneInfos
+                .Where(s => s.Name.ToUpper().Contains(filter.ToUpper()))
+                .OrderByFavorites()
+                .ToArray();
         }
 
         private void InitListItem(VisualElement element, int dataIndex)

@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8eff8d89b42947f999467328c4402fac, type: 3}
   m_Name: SceneSelectorConfig
   m_EditorClassIdentifier: 
-  <Favorites>k__BackingField: []
+  <Favorites>k__BackingField:
+  - 7f728b7350e0944c68cf279dde574492

@@ -11,5 +11,5 @@
     <engine:Image name="scene-icon" />
     <custom:LinkButton text="" name="scene-button"/>
     <engine:VisualElement class="spacer" />
-    <custom:FavoritesButton class="favorites-button"/>
+    <custom:FavoritesButton name="favorites-button"/>
 </engine:UXML>

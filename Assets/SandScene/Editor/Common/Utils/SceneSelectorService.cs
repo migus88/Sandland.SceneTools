@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using SandScene.Editor.SandScene.Editor.Common.Data;
 using UnityEditor;
@@ -10,10 +11,8 @@ namespace SandScene.Editor.Common.Utils
         private const string DefaultConfigDirectory = "Assets/Editor/";
         private const string DefaultConfigPath = DefaultConfigDirectory + "SceneSelectorConfig.asset";
 
-        public static bool HasConfig => AssetDatabaseUtils.TryFindAssets<SceneSelectorConfig>(out var result);
+        public static bool HasConfig => SceneSelectorConfig.Config != null;
 
-        public static SceneSelectorConfig LoadConfig() => AssetDatabaseUtils.FindAndLoadAsset<SceneSelectorConfig>();
-        
         [MenuItem(MenuItems.Tools.CreateConfig)]
         private static void CreateConfig()
         {

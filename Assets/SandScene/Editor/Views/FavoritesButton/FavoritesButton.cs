@@ -1,4 +1,6 @@
 using System;
+using SandScene.Editor.Common.Utils;
+using SandScene.Editor.SandScene.Editor.Common.Data;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -12,18 +14,14 @@ namespace SandScene.Editor.Views
         private static Texture2D _icon;
         
         private Image _starImage;
-    
-        public event Action<FavoritesButton, bool> Clicked;
+        private AssetFileInfo _fileInfo;
     
         public bool IsFavorite { get; private set; }
-    
-        public FavoritesButton()
+        
+        public void Init(AssetFileInfo info)
         {
-            Init();
-        }
-    
-        private void Init()
-        {
+            _fileInfo = info;
+            
             _starImage = new Image
             {
                 image = Icon
@@ -31,19 +29,28 @@ namespace SandScene.Editor.Views
             Add(_starImage);
     
             this.AddManipulator(new Clickable(OnClick));
-            SetFavorite(false);
+            
+            var isFavorite = FavoritesService.IsInFavorites(_fileInfo.Guid);
+            SetState(isFavorite);
         }
     
         private void OnClick() 
         {
-            SetFavorite(!IsFavorite);
-            Clicked?.Invoke(this, IsFavorite);
+            SetState(!IsFavorite);
+
+            if (IsFavorite)
+            {
+                FavoritesService.AddToFavorites(_fileInfo.Guid);
+            }
+            else
+            {
+                FavoritesService.RemoveFromFavorites(_fileInfo.Guid);
+            }
         }
     
-        public void SetFavorite(bool isFavorite)
+        public void SetState(bool isFavorite)
         {
             IsFavorite = isFavorite;
-            
             _starImage.tintColor = IsFavorite ? Color.yellow : Color.gray;
         }
         
