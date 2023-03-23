@@ -1,10 +1,10 @@
 using System;
 using System.IO;
-using SandScene.Editor.SandScene.Editor.Common.Data;
+using Sandland.SceneTool.Editor.Sandland.SceneTool.Editor.Common.Data;
 using UnityEditor;
 using UnityEngine;
 
-namespace SandScene.Editor.Common.Utils
+namespace Sandland.SceneTool.Editor.Common.Utils
 {
     public static class SceneSelectorService
     {

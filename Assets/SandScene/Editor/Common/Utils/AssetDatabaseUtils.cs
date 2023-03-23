@@ -1,14 +1,14 @@
 using System;
 using System.IO;
 using System.Linq;
-using SandScene.Editor.SandScene.Editor.Common.Data;
+using Sandland.SceneTool.Editor.Sandland.SceneTool.Editor.Common.Data;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 using Object = UnityEngine.Object;
 
-namespace SandScene.Editor.Common.Utils
+namespace Sandland.SceneTool.Editor.Common.Utils
 {
     public static class AssetDatabaseUtils
     {

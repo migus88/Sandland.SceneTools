@@ -1,13 +1,13 @@
 using System;
-using SandScene.Editor.Common.Utils;
-using SandScene.Editor.SandScene.Editor.Common.Data;
+using Sandland.SceneTool.Editor.Common.Utils;
+using Sandland.SceneTool.Editor.Sandland.SceneTool.Editor.Common.Data;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.UIElements;
 using Object = UnityEngine.Object;
 
-namespace SandScene.Editor.Views
+namespace Sandland.SceneTool.Editor.Views
 {
     public class SceneItemView : VisualElement, IDisposable 
     {

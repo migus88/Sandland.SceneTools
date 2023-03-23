@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using SandScene.Editor.SandScene.Editor.Common.Data;
+using Sandland.SceneTool.Editor.Sandland.SceneTool.Editor.Common.Data;
 using UnityEditor;
-using static SandScene.Editor.Common.Utils.SceneSelectorService;
-using static SandScene.Editor.SandScene.Editor.Common.Data.SceneSelectorConfig;
+using static Sandland.SceneTool.Editor.Common.Utils.SceneSelectorService;
+using static Sandland.SceneTool.Editor.Sandland.SceneTool.Editor.Common.Data.SceneSelectorConfig;
 
-namespace SandScene.Editor.Common.Utils
+namespace Sandland.SceneTool.Editor.Common.Utils
 {
     public static class FavoritesService
     {

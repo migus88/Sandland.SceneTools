@@ -1,4 +1,4 @@
-namespace SandScene.Editor.Common.Utils
+namespace Sandland.SceneTool.Editor.Common.Utils
 {
     internal static class MenuItems
     {

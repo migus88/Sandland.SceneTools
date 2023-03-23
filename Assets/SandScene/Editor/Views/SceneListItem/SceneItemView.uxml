@@ -3,7 +3,7 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns:engine="UnityEngine.UIElements"
         xmlns:editor="UnityEditor.UIElements"
-        xmlns:custom="SandScene.Editor.Views"
+        xmlns:custom="Sandland.SceneTool.Editor.Views"
         xsi:noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd">
     
     <!--<engine:Button text="Open" name="scene-navigate-button"/>-->

@@ -1,6 +1,6 @@
 {
-    "name": "SandScene.Editor",
-    "rootNamespace": "SandScene.Editor",
+    "name": "Sandland.SceneTool.Editor",
+    "rootNamespace": "Sandland.SceneTool.Editor",
     "references": [],
     "includePlatforms": [
         "Editor"

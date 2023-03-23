@@ -1,4 +1,4 @@
-namespace SandScene.Editor.SandScene.Editor.Common.Data
+namespace Sandland.SceneTool.Editor.Sandland.SceneTool.Editor.Common.Data
 {
     public struct AssetFileInfo
     {

@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using SandScene.Editor.Common.Utils;
+using Sandland.SceneTool.Editor.Common.Utils;
 using UnityEngine;
 
-namespace SandScene.Editor.SandScene.Editor.Common.Data
+namespace Sandland.SceneTool.Editor.Sandland.SceneTool.Editor.Common.Data
 {
     public class SceneSelectorConfig : ScriptableObject
     {

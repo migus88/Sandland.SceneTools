@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace SandScene.Editor.Views
+namespace Sandland.SceneTool.Editor.Views
 {
     public class LinkButton : Label
     {
