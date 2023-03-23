@@ -15,8 +15,8 @@ namespace SandScene.Editor.Views
         private const string WindowName = "Scene Selector";
         private const string KeyboardShortcut = " %g";
         private const string WindowMenuItem = MenuItems.Tools.Root + WindowName + KeyboardShortcut;
-        private const float MinWidth = 600;
-        private const float MinHeight = 700;
+        private const float MinWidth = 400;
+        private const float MinHeight = 400;
 
         private AssetFileInfo[] _sceneInfos;
         private AssetFileInfo[] _filteredSceneInfos;
@@ -71,6 +71,7 @@ namespace SandScene.Editor.Views
             _searchField = rootVisualElement.Q<TextField>("scenes-search");
             _searchField.RegisterValueChangedCallback(OnSearchValueChanged);
             _searchField.Focus();
+            _searchField.SelectAll();
         }
 
         private void OnSearchValueChanged(ChangeEvent<string> @event) => RebuildItems(@event.newValue);

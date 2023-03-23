@@ -4,13 +4,13 @@ namespace SandScene.Editor.Common.Utils
     {
         public static class Tools
         {
-            public const string Root = "Tools/Sandland/";
+            public const string Root = "Tools/Sandland Games/";
             public const string CreateConfig = Root + "Create Config";
         }
 
         public static class Creation
         {
-            public const string Root = "Sandland/";
+            public const string Root = "Sandland Games/";
         }
     }
 }
