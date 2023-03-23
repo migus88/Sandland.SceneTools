@@ -14,21 +14,51 @@ SceneItemView {
     height: 45px;
 }
 
-#scene-name-label {
-    flex-grow: 1;
-    flex-shrink: 1;
-    flex-basis: 200px;
+LinkButton {
+    flex-grow: 0;
+    flex-shrink: 0;
+    cursor: link;
+    color: #5f8ed9;
 }
 
-#scene-navigate-button {
-    flex-shrink: 1;
-    flex-basis: 80px;
-    font-size: 20px;
-    padding: 15px;
+#scene-button {
+    margin-top: -4px;
+}
+
+#scene-icon {
+    flex-shrink: 0;
+    flex-basis: 50px;
+    height: 50px;
+    width: 50px;
+    padding: 5px;
+    padding-right: 0;
 }
 
 #scenes-search {
     font-size: 25px;
-    padding-bottom: 20px;
-    padding-top: 5px;
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+#scenes-search Label {
+    min-width: 94px;
+}
+
+.spacer {
+    flex-grow: 1;
+    flex-shrink: 1;
+}
+
+.favorites-button {
+    flex-direction: row-reverse;
+    width: 50px;
+    padding: 5px;
+    padding-left: 0;
+    cursor: link;
+}
+
+.horizontal-line {
+    height: 2px;
+    background-color: #4a4a4a;
+    margin: 11px;
 }

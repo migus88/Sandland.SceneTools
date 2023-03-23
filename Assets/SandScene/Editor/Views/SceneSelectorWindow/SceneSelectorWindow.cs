@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using SandScene.Editor.Common.Utils;
 using SandScene.Editor.SandScene.Editor.Common.Data;
@@ -25,6 +27,7 @@ namespace SandScene.Editor.Views
         {
             var window = GetWindow<SceneSelectorWindow>();
             window.titleContent = new GUIContent(WindowName);
+            window._searchField?.Focus();
         }
 
         public void CreateGUI()
@@ -34,10 +37,10 @@ namespace SandScene.Editor.Views
 
             var styleSheet = AssetDatabaseUtils.FindAndLoadStyleSheet("SceneSelectorWindow");
             rootVisualElement.styleSheets.Add(styleSheet);
-            PopulateList();
+            Init();
         }
 
-        private void PopulateList()
+        private void Init()
         {
             _sceneInfos = AssetDatabaseUtils.FindScenes();
             _filteredSceneInfos = _sceneInfos;
