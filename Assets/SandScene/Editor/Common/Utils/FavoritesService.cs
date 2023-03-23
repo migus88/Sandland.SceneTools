@@ -11,12 +11,14 @@ namespace SandScene.Editor.Common.Utils
     public static class FavoritesService
     {
         public static event Action FavoritesChanged;
+
+        public static bool CanChangeFavorites => HasConfig;
         
         public static bool IsInFavorites(string guid) => HasConfig && Config.Favorites.Contains(guid);
-            
+
         public static void AddToFavorites(string guid)
         {
-            if (IsInFavorites(guid))
+            if (!HasConfig || IsInFavorites(guid))
             {
                 return;
             }
@@ -29,7 +31,7 @@ namespace SandScene.Editor.Common.Utils
 
         public static void RemoveFromFavorites(string guid)
         {
-            if (!IsInFavorites(guid))
+            if (!HasConfig || !IsInFavorites(guid))
             {
                 return;
             }
@@ -41,6 +43,8 @@ namespace SandScene.Editor.Common.Utils
         }
 
         public static IEnumerable<AssetFileInfo> OrderByFavorites(this IEnumerable<AssetFileInfo> infos) =>
-            infos.OrderByDescending(i => IsInFavorites(i.Guid));
+            HasConfig
+                ? infos.OrderByDescending(i => IsInFavorites(i.Guid))
+                : infos;
     }
 }

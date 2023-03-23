@@ -36,6 +36,11 @@ namespace SandScene.Editor.Views
     
         private void OnClick() 
         {
+            if (!FavoritesService.CanChangeFavorites)
+            {
+                return;
+            }
+            
             SetState(!IsFavorite);
 
             if (IsFavorite)

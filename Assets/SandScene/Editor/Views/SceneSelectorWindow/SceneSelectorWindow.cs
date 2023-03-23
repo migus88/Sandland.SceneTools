@@ -15,6 +15,8 @@ namespace SandScene.Editor.Views
         private const string WindowName = "Scene Selector";
         private const string KeyboardShortcut = " %g";
         private const string WindowMenuItem = MenuItems.Tools.Root + WindowName + KeyboardShortcut;
+        private const float MinWidth = 600;
+        private const float MinHeight = 700;
 
         private AssetFileInfo[] _sceneInfos;
         private AssetFileInfo[] _filteredSceneInfos;
@@ -29,8 +31,9 @@ namespace SandScene.Editor.Views
             {
                 SceneSelectorService.UI.AskToCreateConfig();
             }
-            
+
             var window = GetWindow<SceneSelectorWindow>();
+            window.minSize = new Vector2(MinWidth, MinHeight);
             window.titleContent = new GUIContent(WindowName);
             window._searchField?.Focus();
         }
