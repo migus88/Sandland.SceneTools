@@ -12,20 +12,37 @@ namespace SandScene.Editor.Common.Utils
 {
     public static class AssetDatabaseUtils
     {
-        public static VisualTreeAsset FindAndLoadVisualTreeAsset(string name) => FindAndLoadAsset<VisualTreeAsset>(name);
-        public static StyleSheet FindAndLoadStyleSheet(string name) => FindAndLoadAsset<StyleSheet>(name);
+        public static VisualTreeAsset FindAndLoadVisualTreeAsset(string name = null) => FindAndLoadAsset<VisualTreeAsset>(name);
         
-        public static T FindAndLoadAsset<T>(string name) where T : Object
+        public static StyleSheet FindAndLoadStyleSheet(string name = null) => FindAndLoadAsset<StyleSheet>(name);
+
+        public static bool TryFindAndLoadAsset<T>(out T result, string name = null) where T : Object
         {
-            var type = typeof(T).Name;
-            var guids = AssetDatabase.FindAssets($"{name} t:{type}");
+            try
+            {
+                result = FindAndLoadAsset<T>(name);
+                return true;
+            }
+            catch
+            {
+                result = null;
+                return false;
+            }
+        }
+        
+        public static T FindAndLoadAsset<T>(string name = null) where T : Object
+        {
+            // TODO: Reuse code from FindAssets
+            var typeName = typeof(T).Name;
+            var query = string.IsNullOrEmpty(name) ? $"t:{typeName}" : $"{name} t:{typeName}";
+            var guids = AssetDatabase.FindAssets(query);
 
             switch (guids.Length)
             {
                 case 0:
-                    throw new FileNotFoundException($"Cant locate {type} file with the name: {name}");
+                    throw new FileNotFoundException($"Cant locate {typeName} file with the name: {name}");
                 case > 1:
-                    Debug.LogWarning($"Found more than one {type} file with the name: {name}; Loading only the first");
+                    Debug.LogWarning($"Found more than one {typeName} file with the name: {name}; Loading only the first");
                     break;
             }
 
@@ -35,13 +52,28 @@ namespace SandScene.Editor.Common.Utils
 
             if (asset == null)
             {
-                throw new FileNotFoundException($"Unable to load the {type} with the name {name}");
+                throw new FileNotFoundException($"Unable to load the {typeName} with the name {name}");
             }
 
             return asset;
         }
 
+        public static bool TryFindAssets<T>(out AssetFileInfo[] result, string name = null)
+        {
+            try
+            {
+                result = FindAssets<T>(name);
+                return result.Length > 0;
+            }
+            catch (Exception e)
+            {
+                result = null;
+                return false;
+            }
+        }
+        
         public static AssetFileInfo[] FindScenes(string name = null) => FindAssets<Scene>(name);
+        
         public static AssetFileInfo[] FindAssets<T>(string name = null)
         {
             var typeName = typeof(T).Name;
