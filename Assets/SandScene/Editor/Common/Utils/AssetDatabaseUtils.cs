@@ -65,7 +65,7 @@ namespace Sandland.SceneTool.Editor.Common.Utils
                 result = FindAssets<T>(name);
                 return result.Length > 0;
             }
-            catch (Exception e)
+            catch
             {
                 result = null;
                 return false;
