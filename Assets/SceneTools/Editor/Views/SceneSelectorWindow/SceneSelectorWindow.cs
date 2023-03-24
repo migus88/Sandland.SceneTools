@@ -16,7 +16,7 @@ namespace Sandland.SceneTool.Editor.Views
         private const string KeyboardShortcut = " %g";
         private const string WindowMenuItem = MenuItems.Tools.Root + WindowName + KeyboardShortcut;
         private const float MinWidth = 400;
-        private const float MinHeight = 400;
+        private const float MinHeight = 600;
         
         private static Texture2D Icon => _icon ??= EditorGUIUtility.IconContent("d_UnityLogo").image as Texture2D;
         private static Texture2D _icon;
@@ -38,6 +38,16 @@ namespace Sandland.SceneTool.Editor.Views
             var window = GetWindow<SceneSelectorWindow>();
             window.minSize = new Vector2(MinWidth, MinHeight);
             window.titleContent = new GUIContent(WindowName, Icon);
+
+            if (!window.docked)
+            {
+                var editorPos = EditorGUIUtility.GetMainWindowPosition();
+                var x = editorPos.x + editorPos.width * 0.5f - MinWidth * 0.5f;
+                var y = editorPos.y + editorPos.height * 0.5f - MinHeight * 0.5f;
+
+                window.position = new Rect(x, y, MinWidth, MinHeight);
+            }
+            
             window._searchField?.Focus();
         }
 
