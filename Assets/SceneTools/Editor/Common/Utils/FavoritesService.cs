@@ -3,48 +3,43 @@ using System.Collections.Generic;
 using System.Linq;
 using Sandland.SceneTool.Editor.Sandland.SceneTool.Editor.Common.Data;
 using UnityEditor;
-using static Sandland.SceneTool.Editor.Common.Utils.SceneSelectorService;
-using static Sandland.SceneTool.Editor.Sandland.SceneTool.Editor.Common.Data.SceneSelectorConfig;
 
 namespace Sandland.SceneTool.Editor.Common.Utils
 {
     public static class FavoritesService
     {
+        private const string FavoriteSceneLabel = "sandland-favorite-scene";
+
         public static event Action FavoritesChanged;
 
-        public static bool CanChangeFavorites => HasConfig;
-        
-        public static bool IsInFavorites(string guid) => HasConfig && Config.Favorites.Contains(guid);
+        public static bool IsFavorite(this AssetFileInfo info) => info.Labels?.Contains(FavoriteSceneLabel) ?? false;
 
-        public static void AddToFavorites(string guid)
+        public static void AddToFavorites(this AssetFileInfo info)
         {
-            if (!HasConfig || IsInFavorites(guid))
+            if (info.IsFavorite())
             {
                 return;
             }
 
-            Config.Favorites.Add(guid);
-            EditorUtility.SetDirty(Config);
-            AssetDatabase.SaveAssetIfDirty(Config);
+            info.Labels ??= new List<string>();
+            info.Labels.Add(FavoriteSceneLabel);
+            info.SetLabels();
             FavoritesChanged?.Invoke();
         }
 
-        public static void RemoveFromFavorites(string guid)
+        public static void RemoveFromFavorites(this AssetFileInfo info)
         {
-            if (!HasConfig || !IsInFavorites(guid))
+            if (!info.IsFavorite())
             {
                 return;
             }
 
-            Config.Favorites.Remove(guid);
-            EditorUtility.SetDirty(Config);
-            AssetDatabase.SaveAssetIfDirty(Config);
+            info.Labels.Remove(FavoriteSceneLabel);
+            info.SetLabels();
             FavoritesChanged?.Invoke();
         }
 
         public static IEnumerable<AssetFileInfo> OrderByFavorites(this IEnumerable<AssetFileInfo> infos) =>
-            HasConfig
-                ? infos.OrderByDescending(i => IsInFavorites(i.Guid))
-                : infos;
+            infos.OrderByDescending(i => i.IsFavorite());
     }
 }

@@ -30,26 +30,21 @@ namespace Sandland.SceneTool.Editor.Views
     
             this.AddManipulator(new Clickable(OnClick));
             
-            var isFavorite = FavoritesService.IsInFavorites(_fileInfo.Guid);
+            var isFavorite = _fileInfo.IsFavorite();
             SetState(isFavorite);
         }
     
         private void OnClick() 
         {
-            if (!FavoritesService.CanChangeFavorites)
-            {
-                return;
-            }
-            
             SetState(!IsFavorite);
 
             if (IsFavorite)
             {
-                FavoritesService.AddToFavorites(_fileInfo.Guid);
+                _fileInfo.AddToFavorites();
             }
             else
             {
-                FavoritesService.RemoveFromFavorites(_fileInfo.Guid);
+                _fileInfo.RemoveFromFavorites();
             }
         }
     

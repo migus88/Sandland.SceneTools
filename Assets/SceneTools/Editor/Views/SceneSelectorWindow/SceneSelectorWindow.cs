@@ -1,12 +1,9 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using Sandland.SceneTool.Editor.Common.Utils;
 using Sandland.SceneTool.Editor.Sandland.SceneTool.Editor.Common.Data;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
-using UnityEditor.UIElements;
 
 namespace Sandland.SceneTool.Editor.Views
 {
@@ -30,11 +27,6 @@ namespace Sandland.SceneTool.Editor.Views
         [MenuItem(WindowMenuItem)]
         public static void ShowWindow()
         {
-            if (!SceneSelectorService.HasConfig)
-            {
-                SceneSelectorService.UI.AskToCreateConfig();
-            }
-
             var window = GetWindow<SceneSelectorWindow>();
             window.minSize = new Vector2(MinWidth, MinHeight);
             window.titleContent = new GUIContent(WindowName, Icon);

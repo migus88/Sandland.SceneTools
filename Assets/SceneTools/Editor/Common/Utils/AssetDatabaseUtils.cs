@@ -92,10 +92,17 @@ namespace Sandland.SceneTool.Editor.Common.Utils
                 var guid = guids[i];
                 var path = AssetDatabase.GUIDToAssetPath(guid);
                 var assetName = Path.GetFileNameWithoutExtension(path);
-                result[i] = new AssetFileInfo(assetName, path, guid);
+                var labels = AssetDatabase.GetLabels(new GUID(guid)).ToList();
+                result[i] = new AssetFileInfo(assetName, path, guid, labels);
             }
 
             return result;
+        }
+
+        public static void SetLabels(this AssetFileInfo info)
+        {
+            var asset = AssetDatabase.LoadAssetAtPath<SceneAsset>(info.Path);
+            AssetDatabase.SetLabels(asset, info.Labels.ToArray());
         }
     }
 }
