@@ -1,7 +1,7 @@
 {
   "name": "com.sandland.scene-tools",
   "displayName": "Sandland.SceneTools",
-  "version": "1.0.0",
+  "version": "0.5.0",
   "unity": "2021.3",
   "description": "Various editor tools to work with scenes.",
   "keywords": ["scenes", "editor"],
