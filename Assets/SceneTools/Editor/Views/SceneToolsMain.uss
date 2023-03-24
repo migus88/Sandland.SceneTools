@@ -11,7 +11,7 @@ LinkButton {
     flex-grow: 0;
     flex-shrink: 0;
     cursor: link;
-    color: #5f8ed9;
+    color: #E0C097;
 }
 
 .spacer {

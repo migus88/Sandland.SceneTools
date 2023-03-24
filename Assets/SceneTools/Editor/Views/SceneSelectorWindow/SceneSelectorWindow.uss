@@ -1,3 +1,12 @@
+/*
+    Palette:
+    402c2c - darkest
+    5C3D2E - brown
+    6b5246 - light brown
+    B85C38 - orange
+    E0C097 - biege
+*/
+
 #scenes-list {
     width: 100%;
     height: 100%;
@@ -9,9 +18,12 @@ SceneItemView {
     flex-grow: 0;
     flex-shrink: 0;
     align-items: center;
-    padding: 4px;
     font-size: 16px;
     height: 45px;
+}
+
+SceneItemView:hover {
+    background-color: #5C3D2E;
 }
 
 #scene-button {
@@ -23,15 +35,12 @@ SceneItemView {
     flex-basis: 50px;
     height: 50px;
     width: 50px;
-    padding: 5px;
-    padding-right: 0;
+    padding: 5px 0;
     cursor: zoom;
 }
 
 #scenes-search {
     font-size: 25px;
-    padding-left: 12px;
-    padding-right: 12px;
 }
 
 #scenes-search Label {
@@ -43,9 +52,14 @@ SceneItemView {
     flex-shrink: 0;
     flex-grow: 0;
     width: 50px;
-    padding: 5px;
+    padding: 5px 0;
     padding-left: 0;
 }
 #favorites-button Image {
     cursor: link;
+}
+
+.main-content {
+    flex-grow: 1;
+    margin-bottom: 11px;
 }

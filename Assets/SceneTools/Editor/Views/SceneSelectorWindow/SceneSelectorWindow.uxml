@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <engine:UXML
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:engine="UnityEngine.UIElements"
-    xmlns:editor="UnityEditor.UIElements"
-    xsi:noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:engine="UnityEngine.UIElements"
+        xmlns:editor="UnityEditor.UIElements"
+        xsi:noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd"
 >
-    <engine:VisualElement class="horizontal-spacer"/>
-    <engine:TextField name="scenes-search" label="Search:" Placeholder="Search" />
-    <engine:VisualElement class="horizontal-spacer"/>
-    <engine:ListView name="scenes-list" />
+    <engine:VisualElement class="content-block content-title-block">
+        <engine:Label name="content-title" text="Scene Selector"/>
+    </engine:VisualElement>
+    <engine:VisualElement class="content-block main-content">
+        <engine:TextField name="scenes-search" label="Search:" Placeholder="Search"/>
+        <engine:VisualElement class="horizontal-spacer" />
+        <engine:ListView name="scenes-list"/>
+    </engine:VisualElement>
 </engine:UXML>
