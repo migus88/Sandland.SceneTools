@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<engine:UXML
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:engine="UnityEngine.UIElements"
+    xmlns:editor="UnityEditor.UIElements"
+    xsi:noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd"
+>
+    <engine:VisualElement class="content-block content-title-block">
+        <engine:Label name="content-title" text="Scene Tools Setup" />
+    </engine:VisualElement>
+    <engine:VisualElement class="content-block main-content">
+        <engine:VisualElement class="horizontal-spacer" />
+        <engine:Toggle name="scene-class-generation-toggle" text="Scenes Class Generation" />
+        <engine:VisualElement name="scene-class-generation-block">
+            <engine:VisualElement class="scene-class-generation-property">
+                <engine:TextField label="Namespace:" name="scene-namespace-text" text="Sandland" />
+            </engine:VisualElement>
+            <engine:VisualElement class="scene-class-generation-property">
+                <engine:TextField label="Class Name:" name="scene-class-name-text" text="SceneList" />
+            </engine:VisualElement>
+            <engine:VisualElement class="scene-class-generation-property">
+                <engine:TextField label="Class Location:" name="scene-class-location-text" text="Assets/Sandland/Runtime" />
+                <engine:Button name="scene-class-location-button" text="..."/>
+            </engine:VisualElement>
+        </engine:VisualElement>
+        <engine:VisualElement class="horizontal-spacer" />
+        <engine:Button name="save-button" text="Save" />
+    </engine:VisualElement>
+</engine:UXML>

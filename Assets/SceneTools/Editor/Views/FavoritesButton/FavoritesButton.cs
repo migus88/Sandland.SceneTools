@@ -1,10 +1,8 @@
-using System;
+using Sandland.SceneTool.Editor.Common.Data;
 using Sandland.SceneTool.Editor.Common.Utils;
-using Sandland.SceneTool.Editor.Sandland.SceneTool.Editor.Common.Data;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
-using Object = UnityEngine.Object;
 
 namespace Sandland.SceneTool.Editor.Views
 {

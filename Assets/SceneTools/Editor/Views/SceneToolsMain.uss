@@ -1,0 +1,77 @@
+/*
+    Palette:
+    402c2c - darkest
+    5C3D2E - brown
+    6b5246 - light brown
+    B85C38 - orange
+    E0C097 - biege
+*/
+
+LinkButton {
+    flex-grow: 0;
+    flex-shrink: 0;
+    cursor: link;
+    color: #5f8ed9;
+}
+
+.spacer {
+    flex-grow: 1;
+    flex-shrink: 1;
+}
+
+.horizontal-spacer {
+    height: 1px;
+    background-color: #E0C097;
+    margin-top: 11px;
+    margin-bottom: 11px;
+}
+
+.content-block {
+    margin-left: 11px;
+    margin-right: 11px;
+    padding:11px;
+}
+
+.content-title-block {
+    font-size: 40px;
+    align-items: center;
+    padding-top: 11px;
+    padding-bottom: 11px;
+    margin-top: 11px;
+    margin-bottom: 11px;
+    background-color: #B85C38;
+    color: #E0C097;
+}
+
+.main-content {
+    border-top-color: #402c2c;
+    border-top-width: 20px;
+    background-color: #6b5246;
+}
+
+Toggle #unity-checkmark {
+    margin-right: 8px;
+}
+
+.hidden {
+    display: none;
+}
+
+Button {
+    background-color: #5C3D2E;
+    color: #E0C097;
+    font-size: 15px;
+    border-color: black;
+}
+
+Button:hover {
+    background-color: #75503d;
+}
+
+Button:active {
+    background-color: #3b271d;
+}
+
+Button:focus {
+    border-color: black;
+}

@@ -1,22 +1,24 @@
 using System.Linq;
+using Sandland.SceneTool.Editor.Common.Data;
 using Sandland.SceneTool.Editor.Common.Utils;
-using Sandland.SceneTool.Editor.Sandland.SceneTool.Editor.Common.Data;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace Sandland.SceneTool.Editor.Views
 {
-    internal class SceneSelectorWindow : EditorWindow
+    internal class SceneSelectorWindow : SceneToolsWindowBase
     {
-        private const string WindowName = "Scene Selector";
+        private const string WindowNameInternal = "Scene Selector";
         private const string KeyboardShortcut = " %g";
-        private const string WindowMenuItem = MenuItems.Tools.Root + WindowName + KeyboardShortcut;
-        private const float MinWidth = 400;
-        private const float MinHeight = 600;
+        private const string WindowMenuItem = MenuItems.Tools.Root + WindowNameInternal + KeyboardShortcut;
+
+        public override float MinWidth => 400;
+        public override float MinHeight => 600;
+        public override string WindowName => WindowNameInternal;
+        public override string VisualTreeName => nameof(SceneSelectorWindow);
+        public override string StyleSheetName => nameof(SceneSelectorWindow);
         
-        private static Texture2D Icon => _icon ??= EditorGUIUtility.IconContent("d_UnityLogo").image as Texture2D;
-        private static Texture2D _icon;
 
         private AssetFileInfo[] _sceneInfos;
         private AssetFileInfo[] _filteredSceneInfos;
@@ -28,31 +30,8 @@ namespace Sandland.SceneTool.Editor.Views
         public static void ShowWindow()
         {
             var window = GetWindow<SceneSelectorWindow>();
-            window.minSize = new Vector2(MinWidth, MinHeight);
-            window.titleContent = new GUIContent(WindowName, Icon);
-
-            if (!window.docked)
-            {
-                var editorPos = EditorGUIUtility.GetMainWindowPosition();
-                var x = editorPos.x + editorPos.width * 0.5f - MinWidth * 0.5f;
-                var y = editorPos.y + editorPos.height * 0.5f - MinHeight * 0.5f;
-
-                window.position = new Rect(x, y, MinWidth, MinHeight);
-            }
-            
+            window.InitWindow();
             window._searchField?.Focus();
-        }
-
-        public void CreateGUI()
-        {
-            var visualTree = AssetDatabaseUtils.FindAndLoadVisualTreeAsset("SceneSelectorWindow");
-            visualTree.CloneTree(rootVisualElement);
-
-            var styleSheet = AssetDatabaseUtils.FindAndLoadStyleSheet("SceneSelectorWindow");
-            var globalStyleSheet = AssetDatabaseUtils.FindAndLoadStyleSheet("SceneToolsMain");
-            rootVisualElement.styleSheets.Add(globalStyleSheet);
-            rootVisualElement.styleSheets.Add(styleSheet);
-            Init();
         }
 
         private void OnEnable()
@@ -65,7 +44,7 @@ namespace Sandland.SceneTool.Editor.Views
             FavoritesService.FavoritesChanged -= OnFavoritesChanged;
         }
 
-        private void Init()
+        protected override void InitGui()
         {
             _sceneInfos = AssetDatabaseUtils.FindScenes();
             _filteredSceneInfos = GetFilteredSceneInfos();

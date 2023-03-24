@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Sandland.SceneTool.Editor.Sandland.SceneTool.Editor.Common.Data
+namespace Sandland.SceneTool.Editor.Common.Data
 {
     public struct AssetFileInfo
     {

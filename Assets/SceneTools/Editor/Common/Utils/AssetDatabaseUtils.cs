@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 using System.Linq;
-using Sandland.SceneTool.Editor.Sandland.SceneTool.Editor.Common.Data;
+using Sandland.SceneTool.Editor.Common.Data;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -99,10 +99,24 @@ namespace Sandland.SceneTool.Editor.Common.Utils
             return result;
         }
 
-        public static void SetLabels(this AssetFileInfo info)
+        public static void SetLabels<T>(this AssetFileInfo info) where T : Object
         {
-            var asset = AssetDatabase.LoadAssetAtPath<SceneAsset>(info.Path);
+            var asset = AssetDatabase.LoadAssetAtPath<T>(info.Path);
             AssetDatabase.SetLabels(asset, info.Labels.ToArray());
+        }
+
+        public static void SetLabel<T>(string path, string label) where T : Object
+        {
+            var asset = AssetDatabase.LoadAssetAtPath<T>(path);
+            var labels = AssetDatabase.GetLabels(asset).ToList();
+
+            if (labels.Contains(label))
+            {
+                return;
+            }
+            
+            labels.Add(label);
+            AssetDatabase.SetLabels(asset, labels.ToArray());
         }
     }
 }

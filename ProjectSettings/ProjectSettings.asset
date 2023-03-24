@@ -154,7 +154,8 @@ PlayerSettings:
   resetResolutionOnWindowResize: 0
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
-  applicationIdentifier: {}
+  applicationIdentifier:
+    Standalone: com.DefaultCompany.Sandland.SceneTool
   buildNumber:
     Standalone: 0
     iPhone: 0
@@ -804,7 +805,8 @@ PlayerSettings:
   webGLThreadsSupport: 0
   webGLDecompressionFallback: 0
   webGLPowerPreference: 2
-  scriptingDefineSymbols: {}
+  scriptingDefineSymbols:
+    Standalone: SANDLAND_SCENE_CLASS_GEN
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend: {}

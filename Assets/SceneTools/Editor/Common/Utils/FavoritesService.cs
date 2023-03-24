@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Sandland.SceneTool.Editor.Sandland.SceneTool.Editor.Common.Data;
+using Sandland.SceneTool.Editor.Common.Data;
 using UnityEditor;
 
 namespace Sandland.SceneTool.Editor.Common.Utils
@@ -23,7 +23,7 @@ namespace Sandland.SceneTool.Editor.Common.Utils
 
             info.Labels ??= new List<string>();
             info.Labels.Add(FavoriteSceneLabel);
-            info.SetLabels();
+            info.SetLabels<SceneAsset>();
             FavoritesChanged?.Invoke();
         }
 
@@ -35,7 +35,7 @@ namespace Sandland.SceneTool.Editor.Common.Utils
             }
 
             info.Labels.Remove(FavoriteSceneLabel);
-            info.SetLabels();
+            info.SetLabels<SceneAsset>();
             FavoritesChanged?.Invoke();
         }
 
