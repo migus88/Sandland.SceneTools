@@ -29,7 +29,6 @@ namespace Sandland.SceneTool.Editor.Views
         private void OnClick()
         {
             Clicked?.Invoke();
-            Debug.Log(text);
         }
         
         public new class UxmlFactory : UxmlFactory<LinkButton, UxmlTraits> {}
