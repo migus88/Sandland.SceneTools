@@ -32,6 +32,13 @@ namespace Sandland.SceneTool.Editor.Views
             _iconImage.image = Icon;
             _button.Clicked += OnOpenSceneButtonClicked;
             RegisterCallback<DetachFromPanelEvent>(OnDetachFromPanel);
+            
+            _iconImage.AddManipulator(new Clickable(OnIconClick));
+        }
+
+        private void OnIconClick()
+        {
+            Selection.activeObject = AssetDatabase.LoadAssetAtPath<SceneAsset>(_sceneInfo.Path);
         }
 
         public void Init(AssetFileInfo info)
