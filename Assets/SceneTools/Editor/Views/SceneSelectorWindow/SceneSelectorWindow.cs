@@ -49,6 +49,8 @@ namespace Sandland.SceneTool.Editor.Views
             visualTree.CloneTree(rootVisualElement);
 
             var styleSheet = AssetDatabaseUtils.FindAndLoadStyleSheet("SceneSelectorWindow");
+            var globalStyleSheet = AssetDatabaseUtils.FindAndLoadStyleSheet("SceneToolsMain");
+            rootVisualElement.styleSheets.Add(globalStyleSheet);
             rootVisualElement.styleSheets.Add(styleSheet);
             Init();
         }

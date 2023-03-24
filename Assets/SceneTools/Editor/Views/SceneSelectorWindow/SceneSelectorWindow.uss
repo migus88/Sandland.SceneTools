@@ -14,13 +14,6 @@ SceneItemView {
     height: 45px;
 }
 
-LinkButton {
-    flex-grow: 0;
-    flex-shrink: 0;
-    cursor: link;
-    color: #5f8ed9;
-}
-
 #scene-button {
     margin-top: -4px;
 }
@@ -45,11 +38,6 @@ LinkButton {
     min-width: 94px;
 }
 
-.spacer {
-    flex-grow: 1;
-    flex-shrink: 1;
-}
-
 #favorites-button {
     flex-direction: row-reverse;
     flex-shrink: 0;
@@ -60,10 +48,4 @@ LinkButton {
 }
 #favorites-button Image {
     cursor: link;
-}
-
-.horizontal-line {
-    height: 2px;
-    background-color: #4a4a4a;
-    margin: 11px;
 }

@@ -5,8 +5,8 @@
     xmlns:editor="UnityEditor.UIElements"
     xsi:noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd"
 >
-    <engine:VisualElement class="horizontal-line"/>
+    <engine:VisualElement class="horizontal-spacer"/>
     <engine:TextField name="scenes-search" label="Search:" Placeholder="Search" />
-    <engine:VisualElement class="horizontal-line"/>
+    <engine:VisualElement class="horizontal-spacer"/>
     <engine:ListView name="scenes-list" />
 </engine:UXML>
