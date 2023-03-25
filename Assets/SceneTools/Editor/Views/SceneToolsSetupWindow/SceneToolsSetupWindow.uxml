@@ -13,6 +13,12 @@
         <engine:Toggle name="scene-class-generation-toggle" text="Scenes Class Generation"/>
         <engine:VisualElement name="scene-class-generation-block">
             <engine:VisualElement class="scene-class-generation-property">
+                <engine:Toggle name="scene-class-changes-detection-toggle" text="Generate on 'Built-in Scenes' change" tooltip="If checked, anytime there is a change detected in 'Scenes In Build', the file will be regenerated."/>
+            </engine:VisualElement>
+            <engine:VisualElement class="scene-class-generation-property">
+                <engine:Toggle name="scene-class-addressables-support-toggle" text="Addressable Scenes Support"/>
+            </engine:VisualElement>
+            <engine:VisualElement class="scene-class-generation-property">
                 <engine:TextField label="Namespace:" name="scene-namespace-text" text="Sandland"/>
             </engine:VisualElement>
             <engine:VisualElement class="scene-class-generation-property">

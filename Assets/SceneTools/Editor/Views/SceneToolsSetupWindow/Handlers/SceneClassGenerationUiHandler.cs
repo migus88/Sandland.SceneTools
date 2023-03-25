@@ -10,8 +10,11 @@ namespace Sandland.SceneTool.Editor.Views.Handlers
     {
         private const string HiddenContentClass = "hidden";
         private const string ScriptDefine = "SANDLAND_SCENE_CLASS_GEN";
+        private const string AddressablesSupportDefine = "SANDLAND_ADDRESSABLES";
 
-        private readonly Toggle _toggle;
+        private readonly Toggle _mainToggle;
+        private readonly Toggle _autogenerateOnChangeToggle;
+        private readonly Toggle _addressableScenesSupportToggle;
         private readonly VisualElement _section;
         private readonly TextField _locationText;
         private readonly TextField _namespaceText;
@@ -20,7 +23,9 @@ namespace Sandland.SceneTool.Editor.Views.Handlers
 
         public SceneClassGenerationUiHandler(VisualElement root)
         {
-            _toggle = root.Q<Toggle>("scene-class-generation-toggle");
+            _mainToggle = root.Q<Toggle>("scene-class-generation-toggle");
+            _autogenerateOnChangeToggle = root.Q<Toggle>("scene-class-changes-detection-toggle");
+            _addressableScenesSupportToggle = root.Q<Toggle>("scene-class-addressables-support-toggle");
             _section = root.Q<VisualElement>("scene-class-generation-block");
             _locationText = root.Q<TextField>("scene-class-location-text");
             _namespaceText = root.Q<TextField>("scene-namespace-text");
@@ -33,25 +38,41 @@ namespace Sandland.SceneTool.Editor.Views.Handlers
         private void Init()
         {
             _locationText.SetEnabled(false);
-            _toggle.SetValueWithoutNotify(SceneToolsService.ClassGeneration.IsEnabled);
+            _mainToggle.SetValueWithoutNotify(SceneToolsService.ClassGeneration.IsEnabled);
+            _autogenerateOnChangeToggle.SetValueWithoutNotify(SceneToolsService.ClassGeneration.IsAutoGenerateEnabled);
             _locationText.SetValueWithoutNotify(SceneToolsService.ClassGeneration.Directory);
-            SetSectionVisibility(_toggle.value);
+            _namespaceText.SetValueWithoutNotify(SceneToolsService.ClassGeneration.Namespace);
+            _classNameText.SetValueWithoutNotify(SceneToolsService.ClassGeneration.ClassName);
+
+            if (!Utils.IsAddressablesInstalled)
+            {
+                _addressableScenesSupportToggle.SetValueWithoutNotify(false);
+                _addressableScenesSupportToggle.SetEnabled(false);
+            }
+            else
+            {
+                _addressableScenesSupportToggle.SetValueWithoutNotify(SceneToolsService.ClassGeneration.IsAddressablesSupportEnabled);
+            }
+            
+            SetSectionVisibility(_mainToggle.value);
         }
 
         public void SubscribeToEvents()
         {
             _locationButton.RegisterCallback<ClickEvent>(OnLocationClicked);
-            _toggle.RegisterValueChangedCallback(OnToggleChanged);
+            _mainToggle.RegisterValueChangedCallback(OnMainToggleChanged);
         }
 
         public void UnsubscribeFromEvents()
         {
             _locationButton.UnregisterCallback<ClickEvent>(OnLocationClicked);
-            _toggle.UnregisterValueChangedCallback(OnToggleChanged);
+            _mainToggle.UnregisterValueChangedCallback(OnMainToggleChanged);
         }
 
         public void Apply()
         {
+            SceneToolsService.ClassGeneration.IsEnabled = _mainToggle.value;
+
             if (!SceneToolsService.ClassGeneration.IsEnabled)
             {
                 DefineUtils.RemoveDefine(ScriptDefine);
@@ -60,9 +81,20 @@ namespace Sandland.SceneTool.Editor.Views.Handlers
 
             DefineUtils.AddDefine(ScriptDefine);
 
+            SceneToolsService.ClassGeneration.IsAddressablesSupportEnabled = _addressableScenesSupportToggle.value;
+            if (SceneToolsService.ClassGeneration.IsAddressablesSupportEnabled)
+            {
+                DefineUtils.AddDefine(AddressablesSupportDefine);
+            }
+            else
+            {
+                DefineUtils.RemoveDefine(AddressablesSupportDefine);
+            }
+
             SceneToolsService.ClassGeneration.Directory = _locationText.text;
             SceneToolsService.ClassGeneration.Namespace = _namespaceText.text;
             SceneToolsService.ClassGeneration.ClassName = _classNameText.text;
+            SceneToolsService.ClassGeneration.IsAutoGenerateEnabled = _autogenerateOnChangeToggle.value;
 
             if (!AssetDatabase.IsValidFolder(_locationText.text))
             {
@@ -70,9 +102,8 @@ namespace Sandland.SceneTool.Editor.Views.Handlers
             }
         }
 
-        private void OnToggleChanged(ChangeEvent<bool> args)
+        private void OnMainToggleChanged(ChangeEvent<bool> args)
         {
-            SceneToolsService.ClassGeneration.IsEnabled = args.newValue;
             SetSectionVisibility(args.newValue);
         }
 

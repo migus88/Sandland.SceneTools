@@ -5,6 +5,7 @@ namespace Sandland.SceneTool.Editor.Common.Utils
         public static class Tools
         {
             public const string Root = "Tools/Sandland Games/";
+            public const string Actions = Root + "Actions/";
         }
 
         public static class Creation

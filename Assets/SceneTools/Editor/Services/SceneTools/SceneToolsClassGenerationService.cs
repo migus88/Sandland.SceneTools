@@ -11,10 +11,13 @@ namespace Sandland.SceneTool.Editor.Services
     {
         public static class ClassGeneration
         {
-            private const string ToggleKey = "sandland-scene-class-generation-toggle";
+            private const string MainToggleKey = "sandland-scene-class-generation-toggle";
             private const string LocationKey = "sandland-scene-class-generation-location";
             private const string ClassNameKey = "sandland-scene-class-generation-class-name";
             private const string NamespaceKey = "sandland-scene-class-generation-namespace";
+            private const string AddressablesSupportKey = "sandland-scene-class-generation-addressables-support";
+            private const string AutogenerateOnChangeToggleKey = "sandland-scene-class-generation-autogenerate-toggle";
+            
             private const string DefaultLocation = "Assets/Sandland/Runtime/";
             private const string DefaultClassName = "SceneList";
             private const string DefaultNamespace = "Sandland";
@@ -22,8 +25,20 @@ namespace Sandland.SceneTool.Editor.Services
 
             public static bool IsEnabled
             {
-                get => EditorPrefs.GetBool(ToggleKey, false);
-                set => EditorPrefs.SetBool(ToggleKey, value);
+                get => EditorPrefs.GetBool(MainToggleKey, false);
+                set => EditorPrefs.SetBool(MainToggleKey, value);
+            }
+            
+            public static bool IsAutoGenerateEnabled
+            {
+                get => EditorPrefs.GetBool(AutogenerateOnChangeToggleKey, true);
+                set => EditorPrefs.SetBool(AutogenerateOnChangeToggleKey, value);
+            }
+            
+            public static bool IsAddressablesSupportEnabled
+            {
+                get => EditorPrefs.GetBool(AddressablesSupportKey, false);
+                set => EditorPrefs.SetBool(AddressablesSupportKey, value);
             }
 
             public static string Directory
@@ -49,29 +64,28 @@ namespace Sandland.SceneTool.Editor.Services
             public static void CreateFile(IEnumerable<SceneInfo> scenes)
             {
                 var builtInIndexes = scenes.Select(s =>
-                    $"\t\t\t\tpublic const int {s.Name.ToPascalCase()} = {s.BuildIndex.ToString()};");
+                    $"\t\t\tpublic const int {s.Name.ToPascalCase()} = {s.BuildIndex.ToString()};");
                 var builtInNames = scenes.Select(s =>
-                    $"\t\t\t\tpublic const string {s.Name.ToPascalCase()} = \"{s.Name}\";");
+                    $"\t\t\tpublic const string {s.Name.ToPascalCase()} = \"{s.Name}\";");
+                var addresses = scenes.Where(s => !string.IsNullOrWhiteSpace(s.Address))
+                    .Select(s => $"\t\t\tpublic const string {s.Address.ToPascalCase()} = \"{s.Address}\";");
 
                 var content = $"namespace {Namespace}\n" +
                               $"{{\n" +
                               $"\tpublic class {ClassName}\n" +
                               $"\t{{\n" +
-                              $"\t\tpublic class BuildIn\n" +
+                              $"\t\tpublic class Names\n" +
                               $"\t\t{{\n" +
-                              $"\t\t\tpublic class Names\n" +
-                              $"\t\t\t{{\n" +
                               string.Join("\n", builtInNames) +
-                              $"\n\t\t\t}}\n" +
-                              $"\n\t\t\tpublic class Indexes\n" +
-                              $"\t\t\t{{\n" +
+                              $"\n\t\t}}\n" +
+                              $"\n\t\tpublic class Indexes\n" +
+                              $"\t\t{{\n" +
                               string.Join("\n", builtInIndexes) +
-                              $"\n\t\t\t}}\n" +
-                              $"\t\t}}\n\n" +
+                              $"\n\t\t}}\n\n" +
                               "\t\tpublic class Addressables\n" +
                               $"\t\t{{\n" +
-                              "\n" +
-                              $"\t\t}}\n" +
+                              string.Join("\n", addresses) +
+                              $"\n\t\t}}\n" +
                               $"\t}}\n" +
                               $"}}\n";
 

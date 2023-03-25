@@ -1,12 +1,14 @@
 {
   "name": "com.sandland.scene-tools",
   "displayName": "Sandland.SceneTools",
-  "version": "0.7.1",
+  "version": "0.8.0",
   "unity": "2021.3",
   "description": "Enhance your Unity scene management workflow with this powerful set of editor tools.",
   "keywords": [
     "scenes",
-    "editor"
+    "editor",
+    "tool",
+    "tools"
   ],
   "author": {
     "name": "Sandland Games",

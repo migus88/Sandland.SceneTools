@@ -74,7 +74,32 @@ namespace Sandland.SceneTool.Editor.Common.Utils
             }
         }
 
-        public static AssetFileInfo[] FindScenes(string name = null) => FindAssets<Scene>(name);
+        public static SceneInfo[] FindScenes(string name = null)
+        {
+            var assets = FindAssets<Scene>(name);
+
+            var result = new SceneInfo[assets.Length];
+
+            for (var i = 0; i < assets.Length; i++)
+            {
+                var asset = assets[i];
+                
+                if (Utils.IsAssetAddressable(asset.Guid, out var address))
+                {
+                    result[i] = SceneInfo.Create.Addressable(address, asset.Name, asset.Path, asset.Guid, asset.Labels);
+                }
+                else if (Utils.IsSceneInBuildSettings(asset.Guid, out var buildIndex))
+                {
+                    result[i] = SceneInfo.Create.BuiltIn(asset.Name, buildIndex, asset.Path, asset.Guid, asset.Labels);
+                }
+                else
+                {
+                    result[i] = SceneInfo.Create.Default(asset.Name, asset.Path, asset.Guid, asset.Labels);
+                }
+            }
+
+            return result;
+        }
 
         public static AssetFileInfo[] FindAssets<T>(string name = null)
         {

@@ -69,12 +69,12 @@ public class SceneLoader : MonoBehaviour
 {
     public void LoadSampleScene()
     {
-        SceneManager.LoadScene(SceneList.BuildIn.Names.SampleScene);
+        SceneManager.LoadScene(SceneList.Names.SampleScene);
     }
 
     public void LoadYetAnotherScene()
     {
-        SceneManager.LoadScene(SceneList.BuildIn.Indexes.YetAnotherScene);
+        SceneManager.LoadScene(SceneList.Indexes.YetAnotherScene);
     }
 }
 ```
