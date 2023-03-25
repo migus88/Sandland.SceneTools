@@ -38,6 +38,8 @@ namespace Sandland.SceneTool.Editor.Views.Handlers
             _mainToggle.SetValueWithoutNotify(SceneToolsService.ClassGeneration.IsEnabled);
             _autogenerateOnChangeToggle.SetValueWithoutNotify(SceneToolsService.ClassGeneration.IsAutoGenerateEnabled);
             _locationText.SetValueWithoutNotify(SceneToolsService.ClassGeneration.Directory);
+            _namespaceText.SetValueWithoutNotify(SceneToolsService.ClassGeneration.Namespace);
+            _classNameText.SetValueWithoutNotify(SceneToolsService.ClassGeneration.ClassName);
             SetSectionVisibility(_mainToggle.value);
         }
 
