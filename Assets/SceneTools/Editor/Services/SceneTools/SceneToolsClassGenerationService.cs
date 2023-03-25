@@ -49,25 +49,22 @@ namespace Sandland.SceneTool.Editor.Services
             public static void CreateFile(IEnumerable<SceneInfo> scenes)
             {
                 var builtInIndexes = scenes.Select(s =>
-                    $"\t\t\t\tpublic const int {s.Name.ToPascalCase()} = {s.BuildIndex.ToString()};");
+                    $"\t\t\tpublic const int {s.Name.ToPascalCase()} = {s.BuildIndex.ToString()};");
                 var builtInNames = scenes.Select(s =>
-                    $"\t\t\t\tpublic const string {s.Name.ToPascalCase()} = \"{s.Name}\";");
+                    $"\t\t\tpublic const string {s.Name.ToPascalCase()} = \"{s.Name}\";");
 
                 var content = $"namespace {Namespace}\n" +
                               $"{{\n" +
                               $"\tpublic class {ClassName}\n" +
                               $"\t{{\n" +
-                              $"\t\tpublic class BuildIn\n" +
+                              $"\t\tpublic class Names\n" +
                               $"\t\t{{\n" +
-                              $"\t\t\tpublic class Names\n" +
-                              $"\t\t\t{{\n" +
                               string.Join("\n", builtInNames) +
-                              $"\n\t\t\t}}\n" +
-                              $"\n\t\t\tpublic class Indexes\n" +
-                              $"\t\t\t{{\n" +
+                              $"\n\t\t}}\n" +
+                              $"\n\t\tpublic class Indexes\n" +
+                              $"\t\t{{\n" +
                               string.Join("\n", builtInIndexes) +
-                              $"\n\t\t\t}}\n" +
-                              $"\t\t}}\n\n" +
+                              $"\n\t\t}}\n" +
                               "\t\tpublic class Addressables\n" +
                               $"\t\t{{\n" +
                               "\n" +
