@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Sandland.SceneTool.Editor.Common.Data;
+using Sandland.SceneTool.Editor.Common.Utils;
 using Sandland.SceneTool.Editor.Services;
 using UnityEditor;
 
@@ -15,6 +16,7 @@ namespace Sandland.SceneTool.Editor.Listeners
             EditorBuildSettings.sceneListChanged += OnSceneListChanged;
         }
 
+        [MenuItem(MenuItems.Tools.Actions + "Generate Scenes Class")]
         private static void OnSceneListChanged()
         {
             if (!SceneToolsService.ClassGeneration.IsAutoGenerateEnabled)
