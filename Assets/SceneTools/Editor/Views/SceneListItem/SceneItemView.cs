@@ -8,7 +8,7 @@ using UnityEngine.UIElements;
 
 namespace Sandland.SceneTool.Editor.Views
 {
-    public class SceneItemView : VisualElement, IDisposable 
+    internal class SceneItemView : VisualElement, IDisposable
     {
         private static Texture2D Icon => _icon ??= EditorGUIUtility.IconContent("SceneAsset Icon").image as Texture2D;
         private static Texture2D _icon;
@@ -16,9 +16,9 @@ namespace Sandland.SceneTool.Editor.Views
         private readonly Image _iconImage;
         private readonly FavoritesButton _favoritesButton;
         private readonly LinkButton _button;
-        
+
         private AssetFileInfo _sceneInfo;
-        
+
         public SceneItemView()
         {
             var visualTree = AssetDatabaseUtils.FindAndLoadVisualTreeAsset("SceneItemView");
@@ -27,11 +27,11 @@ namespace Sandland.SceneTool.Editor.Views
             _iconImage = this.Q<Image>("scene-icon");
             _button = this.Q<LinkButton>("scene-button");
             _favoritesButton = this.Q<FavoritesButton>("favorites-button");
-            
+
             _iconImage.image = Icon;
             _button.Clicked += OnOpenSceneButtonClicked;
             RegisterCallback<DetachFromPanelEvent>(OnDetachFromPanel);
-            
+
             _iconImage.AddManipulator(new Clickable(OnIconClick));
         }
 
@@ -45,7 +45,7 @@ namespace Sandland.SceneTool.Editor.Views
             _sceneInfo = info;
             _button.text = _sceneInfo.Name;
             _favoritesButton.Init(_sceneInfo);
-            
+
             ResetInlineStyles();
         }
 
@@ -64,7 +64,7 @@ namespace Sandland.SceneTool.Editor.Views
         {
             EditorSceneManager.OpenScene(_sceneInfo.Path);
         }
-        
+
         private void OnDetachFromPanel(DetachFromPanelEvent evt)
         {
             Dispose();

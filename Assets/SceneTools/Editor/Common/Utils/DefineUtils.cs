@@ -2,7 +2,7 @@ using UnityEditor;
 
 namespace Sandland.SceneTool.Editor.Common.Utils
 {
-    public class DefineUtils
+    internal class DefineUtils
     {
         public static void AddDefine(string define)
         {

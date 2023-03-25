@@ -1,5 +1,4 @@
 #if SANDLAND_SCENE_CLASS_GEN
-
 using System.Collections.Generic;
 using System.IO;
 using Sandland.SceneTool.Editor.Common.Data;
@@ -8,7 +7,7 @@ using UnityEditor;
 
 namespace Sandland.SceneTool.Editor.Listeners
 {
-    public static class SceneClassGenerationListener
+    internal static class SceneClassGenerationListener
     {
         [InitializeOnLoadMethod]
         private static void Initialize()

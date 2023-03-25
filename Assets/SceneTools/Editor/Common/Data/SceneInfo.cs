@@ -1,8 +1,9 @@
 namespace Sandland.SceneTool.Editor.Common.Data
 {
-    public struct SceneInfo
+    internal struct SceneInfo
     {
         public string Name { get; set; }
+
         public int BuildIndex { get; set; }
         //TODO: Implement support for addressables scenes
 

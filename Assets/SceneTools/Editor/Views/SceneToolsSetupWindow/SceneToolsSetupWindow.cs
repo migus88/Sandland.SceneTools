@@ -8,9 +8,9 @@ using UnityEngine.UIElements;
 
 namespace Sandland.SceneTool.Editor.Views
 {
-    public class SceneToolsSetupWindow : SceneToolsWindowBase
+    internal class SceneToolsSetupWindow : SceneToolsWindowBase
     {
-        private const string WindowMenuItem = MenuItems.Tools.Root + "Setup";
+        private const string WindowMenuItem = MenuItems.Tools.Root + "Setup Scene Tools";
 
         public override float MinWidth => 600;
         public override float MinHeight => 600;
@@ -19,10 +19,10 @@ namespace Sandland.SceneTool.Editor.Views
         public override string StyleSheetName => nameof(SceneToolsSetupWindow);
 
         private readonly List<ISceneToolsSetupUiHandler> _uiHandlers = new();
-        
+
         private Button _saveAllButton;
-        
-        [MenuItem(WindowMenuItem)]
+
+        [MenuItem(WindowMenuItem, priority = 0)]
         public static void ShowWindow()
         {
             var window = GetWindow<SceneToolsSetupWindow>();
@@ -34,9 +34,9 @@ namespace Sandland.SceneTool.Editor.Views
         {
             var sceneClassGenerationUiHandler = new SceneClassGenerationUiHandler(rootVisualElement);
             _uiHandlers.Add(sceneClassGenerationUiHandler);
-            
+
             _saveAllButton = rootVisualElement.Q<Button>("save-button");
-            
+
             _saveAllButton.clicked += OnSaveAllButtonClicked;
             _uiHandlers.ForEach(handler => handler.SubscribeToEvents());
         }
@@ -46,7 +46,7 @@ namespace Sandland.SceneTool.Editor.Views
             _saveAllButton.clicked -= OnSaveAllButtonClicked;
             _uiHandlers.ForEach(handler => handler.UnsubscribeFromEvents());
         }
-        
+
         private async void OnSaveAllButtonClicked()
         {
             rootVisualElement.SetEnabled(false);
@@ -56,7 +56,7 @@ namespace Sandland.SceneTool.Editor.Views
             {
                 await Task.Delay(100); // Checking every 100ms
             }
-            
+
             rootVisualElement.SetEnabled(true);
         }
     }

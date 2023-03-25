@@ -16,10 +16,5 @@ namespace Sandland
 				public const int SampleScene = 1;
 			}
 		}
-
-		public class Addressables
-		{
-
-		}
 	}
 }

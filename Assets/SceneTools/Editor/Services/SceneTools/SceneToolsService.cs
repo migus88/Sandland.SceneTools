@@ -1,7 +1,6 @@
-namespace Sandland.SceneTool.Editor.Common.Utils
+namespace Sandland.SceneTool.Editor.Services
 {
-    public static partial class SceneToolsService
+    internal static partial class SceneToolsService
     {
-
     }
 }

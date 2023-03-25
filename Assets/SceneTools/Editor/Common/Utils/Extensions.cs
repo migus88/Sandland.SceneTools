@@ -10,12 +10,12 @@ namespace Sandland.SceneTool.Editor.Common.Utils
         public static string GetRelativePath(this string fullPath) => fullPath.StartsWith(Application.dataPath)
             ? $"Assets{fullPath.Substring(Application.dataPath.Length)}"
             : string.Empty;
-        
+
         public static string ToPascalCase(this string original)
         {
             // TODO: optimize this method
             // Taken from here: https://stackoverflow.com/a/46095771
-            
+
             var invalidCharsRgx = new Regex("[^_a-zA-Z0-9]");
             var whiteSpace = new Regex(@"(?<=\s)");
             var startsWithLowerCaseChar = new Regex("^[a-z]");

@@ -29,7 +29,7 @@ LinkButton {
 .content-block {
     margin-left: 11px;
     margin-right: 11px;
-    padding:11px;
+    padding: 11px;
 }
 
 .content-title-block {

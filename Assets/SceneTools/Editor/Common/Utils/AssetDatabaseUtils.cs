@@ -10,10 +10,11 @@ using Object = UnityEngine.Object;
 
 namespace Sandland.SceneTool.Editor.Common.Utils
 {
-    public static class AssetDatabaseUtils
+    internal static class AssetDatabaseUtils
     {
-        public static VisualTreeAsset FindAndLoadVisualTreeAsset(string name = null) => FindAndLoadAsset<VisualTreeAsset>(name);
-        
+        public static VisualTreeAsset FindAndLoadVisualTreeAsset(string name = null) =>
+            FindAndLoadAsset<VisualTreeAsset>(name);
+
         public static StyleSheet FindAndLoadStyleSheet(string name = null) => FindAndLoadAsset<StyleSheet>(name);
 
         public static bool TryFindAndLoadAsset<T>(out T result, string name = null) where T : Object
@@ -29,7 +30,7 @@ namespace Sandland.SceneTool.Editor.Common.Utils
                 return false;
             }
         }
-        
+
         public static T FindAndLoadAsset<T>(string name = null) where T : Object
         {
             // TODO: Reuse code from FindAssets
@@ -42,12 +43,13 @@ namespace Sandland.SceneTool.Editor.Common.Utils
                 case 0:
                     throw new FileNotFoundException($"Cant locate {typeName} file with the name: {name}");
                 case > 1:
-                    Debug.LogWarning($"Found more than one {typeName} file with the name: {name}; Loading only the first");
+                    Debug.LogWarning(
+                        $"Found more than one {typeName} file with the name: {name}; Loading only the first");
                     break;
             }
 
             var path = AssetDatabase.GUIDToAssetPath(guids.First());
-            
+
             var asset = AssetDatabase.LoadAssetAtPath<T>(path);
 
             if (asset == null)
@@ -71,9 +73,9 @@ namespace Sandland.SceneTool.Editor.Common.Utils
                 return false;
             }
         }
-        
+
         public static AssetFileInfo[] FindScenes(string name = null) => FindAssets<Scene>(name);
-        
+
         public static AssetFileInfo[] FindAssets<T>(string name = null)
         {
             var typeName = typeof(T).Name;
@@ -114,7 +116,7 @@ namespace Sandland.SceneTool.Editor.Common.Utils
             {
                 return;
             }
-            
+
             labels.Add(label);
             AssetDatabase.SetLabels(asset, labels.ToArray());
         }

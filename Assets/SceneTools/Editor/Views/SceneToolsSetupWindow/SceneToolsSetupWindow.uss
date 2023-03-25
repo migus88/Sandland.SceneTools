@@ -31,20 +31,20 @@
     color: white;
 }
 
-.scene-class-generation-property TextInput{
+.scene-class-generation-property TextInput {
     font-size: 15px;
 }
 
-.main-content>Toggle {
+.main-content > Toggle {
     font-size: 20px;
     margin-bottom: 15px;
 }
 
-.main-content>Toggle Label {
+.main-content > Toggle Label {
     color: #E0C097;
 }
 
-.main-content>Toggle #unity-checkmark {
+.main-content > Toggle #unity-checkmark {
     width: 20px;
     height: 20px;
 }

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Sandland.SceneTool.Editor.Common.Data
 {
-    public struct AssetFileInfo
+    internal struct AssetFileInfo
     {
         public string Name { get; set; }
         public string Path { get; set; }

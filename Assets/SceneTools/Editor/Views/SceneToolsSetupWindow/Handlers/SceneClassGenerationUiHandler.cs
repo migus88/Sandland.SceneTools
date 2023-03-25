@@ -1,6 +1,6 @@
-using System;
 using System.IO;
 using Sandland.SceneTool.Editor.Common.Utils;
+using Sandland.SceneTool.Editor.Services;
 using UnityEditor;
 using UnityEngine.UIElements;
 
@@ -57,13 +57,13 @@ namespace Sandland.SceneTool.Editor.Views.Handlers
                 DefineUtils.RemoveDefine(ScriptDefine);
                 return;
             }
-            
+
             DefineUtils.AddDefine(ScriptDefine);
 
             SceneToolsService.ClassGeneration.Directory = _locationText.text;
             SceneToolsService.ClassGeneration.Namespace = _namespaceText.text;
             SceneToolsService.ClassGeneration.ClassName = _classNameText.text;
-            
+
             if (!AssetDatabase.IsValidFolder(_locationText.text))
             {
                 Directory.CreateDirectory(_locationText.text);

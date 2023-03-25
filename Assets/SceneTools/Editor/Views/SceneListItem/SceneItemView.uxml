@@ -5,11 +5,11 @@
         xmlns:editor="UnityEditor.UIElements"
         xmlns:custom="Sandland.SceneTool.Editor.Views"
         xsi:noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd">
-    
+
     <!--<engine:Button text="Open" name="scene-navigate-button"/>-->
     <!--<engine:Label text="" name="scene-name-label"/>-->
-    <engine:Image name="scene-icon" />
+    <engine:Image name="scene-icon"/>
     <custom:LinkButton text="" name="scene-button"/>
-    <engine:VisualElement class="spacer" />
+    <engine:VisualElement class="spacer"/>
     <custom:FavoritesButton name="favorites-button"/>
 </engine:UXML>

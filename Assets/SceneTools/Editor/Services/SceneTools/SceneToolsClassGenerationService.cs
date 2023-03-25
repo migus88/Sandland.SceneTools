@@ -2,12 +2,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Sandland.SceneTool.Editor.Common.Data;
+using Sandland.SceneTool.Editor.Common.Utils;
 using UnityEditor;
-using UnityEngine.TextCore.Text;
 
-namespace Sandland.SceneTool.Editor.Common.Utils
+namespace Sandland.SceneTool.Editor.Services
 {
-    public static partial class SceneToolsService
+    internal static partial class SceneToolsService
     {
         public static class ClassGeneration
         {
@@ -31,13 +31,13 @@ namespace Sandland.SceneTool.Editor.Common.Utils
                 get => GetDirectory();
                 set => EditorPrefs.SetString(LocationKey, value);
             }
-            
+
             public static string ClassName
             {
                 get => EditorPrefs.GetString(ClassNameKey, DefaultClassName);
                 set => EditorPrefs.SetString(ClassNameKey, value);
             }
-            
+
             public static string Namespace
             {
                 get => EditorPrefs.GetString(NamespaceKey, DefaultNamespace);
@@ -48,9 +48,11 @@ namespace Sandland.SceneTool.Editor.Common.Utils
 
             public static void CreateFile(IEnumerable<SceneInfo> scenes)
             {
-                var builtInIndexes = scenes.Select(s => $"\t\t\t\tpublic const int {s.Name.ToPascalCase()} = {s.BuildIndex.ToString()};");
-                var builtInNames = scenes.Select(s => $"\t\t\t\tpublic const string {s.Name.ToPascalCase()} = \"{s.Name}\";");
-                
+                var builtInIndexes = scenes.Select(s =>
+                    $"\t\t\t\tpublic const int {s.Name.ToPascalCase()} = {s.BuildIndex.ToString()};");
+                var builtInNames = scenes.Select(s =>
+                    $"\t\t\t\tpublic const string {s.Name.ToPascalCase()} = \"{s.Name}\";");
+
                 var content = $"namespace {Namespace}\n" +
                               $"{{\n" +
                               $"\tpublic class {ClassName}\n" +
@@ -66,12 +68,10 @@ namespace Sandland.SceneTool.Editor.Common.Utils
                               string.Join("\n", builtInIndexes) +
                               $"\n\t\t\t}}\n" +
                               $"\t\t}}\n\n" +
-                              
                               "\t\tpublic class Addressables\n" +
                               $"\t\t{{\n" +
                               "\n" +
                               $"\t\t}}\n" +
-                              
                               $"\t}}\n" +
                               $"}}\n";
 
@@ -81,10 +81,10 @@ namespace Sandland.SceneTool.Editor.Common.Utils
                 {
                     System.IO.Directory.CreateDirectory(Directory);
                 }
-                
+
                 File.WriteAllText(finalPath, content);
                 AssetDatabase.Refresh();
-                
+
                 AssetDatabaseUtils.SetLabel<MonoScript>(finalPath, Label);
             }
 

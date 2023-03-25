@@ -10,7 +10,7 @@
     </engine:VisualElement>
     <engine:VisualElement class="content-block main-content">
         <engine:TextField name="scenes-search" label="Search:" Placeholder="Search"/>
-        <engine:VisualElement class="horizontal-spacer" />
+        <engine:VisualElement class="horizontal-spacer"/>
         <engine:ListView name="scenes-list"/>
     </engine:VisualElement>
 </engine:UXML>

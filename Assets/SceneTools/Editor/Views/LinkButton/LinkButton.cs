@@ -4,14 +4,14 @@ using UnityEngine.UIElements;
 
 namespace Sandland.SceneTool.Editor.Views
 {
-    public class LinkButton : Label
+    internal class LinkButton : Label
     {
         public event Action Clicked;
 
         public override string text
         {
             get => base.text;
-            set => base.text = value.StartsWith("<u>") ? value : $"<u>{value}</u>"; 
+            set => base.text = value.StartsWith("<u>") ? value : $"<u>{value}</u>";
         }
 
         public LinkButton() : base()
@@ -30,7 +30,9 @@ namespace Sandland.SceneTool.Editor.Views
         {
             Clicked?.Invoke();
         }
-        
-        public new class UxmlFactory : UxmlFactory<LinkButton, UxmlTraits> {}
+
+        public new class UxmlFactory : UxmlFactory<LinkButton, UxmlTraits>
+        {
+        }
     }
 }

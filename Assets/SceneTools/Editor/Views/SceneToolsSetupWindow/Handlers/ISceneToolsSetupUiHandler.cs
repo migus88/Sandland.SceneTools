@@ -1,6 +1,6 @@
 namespace Sandland.SceneTool.Editor.Views.Handlers
 {
-    public interface ISceneToolsSetupUiHandler
+    internal interface ISceneToolsSetupUiHandler
     {
         void SubscribeToEvents();
         void UnsubscribeFromEvents();
