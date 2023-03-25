@@ -11,7 +11,8 @@ namespace Sandland.SceneTool.Editor.Views.Handlers
         private const string HiddenContentClass = "hidden";
         private const string ScriptDefine = "SANDLAND_SCENE_CLASS_GEN";
 
-        private readonly Toggle _toggle;
+        private readonly Toggle _mainToggle;
+        private readonly Toggle _autogenerateOnChangeToggle;
         private readonly VisualElement _section;
         private readonly TextField _locationText;
         private readonly TextField _namespaceText;
@@ -20,7 +21,8 @@ namespace Sandland.SceneTool.Editor.Views.Handlers
 
         public SceneClassGenerationUiHandler(VisualElement root)
         {
-            _toggle = root.Q<Toggle>("scene-class-generation-toggle");
+            _mainToggle = root.Q<Toggle>("scene-class-generation-toggle");
+            _autogenerateOnChangeToggle = root.Q<Toggle>("scene-class-changes-detection-toggle");
             _section = root.Q<VisualElement>("scene-class-generation-block");
             _locationText = root.Q<TextField>("scene-class-location-text");
             _namespaceText = root.Q<TextField>("scene-namespace-text");
@@ -33,21 +35,24 @@ namespace Sandland.SceneTool.Editor.Views.Handlers
         private void Init()
         {
             _locationText.SetEnabled(false);
-            _toggle.SetValueWithoutNotify(SceneToolsService.ClassGeneration.IsEnabled);
+            _mainToggle.SetValueWithoutNotify(SceneToolsService.ClassGeneration.IsEnabled);
+            _autogenerateOnChangeToggle.SetValueWithoutNotify(SceneToolsService.ClassGeneration.IsAutoGenerateEnabled);
             _locationText.SetValueWithoutNotify(SceneToolsService.ClassGeneration.Directory);
-            SetSectionVisibility(_toggle.value);
+            SetSectionVisibility(_mainToggle.value);
         }
 
         public void SubscribeToEvents()
         {
             _locationButton.RegisterCallback<ClickEvent>(OnLocationClicked);
-            _toggle.RegisterValueChangedCallback(OnToggleChanged);
+            _mainToggle.RegisterValueChangedCallback(OnMainToggleChanged);
+            _autogenerateOnChangeToggle.RegisterValueChangedCallback(OnAutogenerateToggleChanged);
         }
 
         public void UnsubscribeFromEvents()
         {
             _locationButton.UnregisterCallback<ClickEvent>(OnLocationClicked);
-            _toggle.UnregisterValueChangedCallback(OnToggleChanged);
+            _mainToggle.UnregisterValueChangedCallback(OnMainToggleChanged);
+            _autogenerateOnChangeToggle.UnregisterValueChangedCallback(OnAutogenerateToggleChanged);
         }
 
         public void Apply()
@@ -70,10 +75,15 @@ namespace Sandland.SceneTool.Editor.Views.Handlers
             }
         }
 
-        private void OnToggleChanged(ChangeEvent<bool> args)
+        private void OnMainToggleChanged(ChangeEvent<bool> args)
         {
             SceneToolsService.ClassGeneration.IsEnabled = args.newValue;
             SetSectionVisibility(args.newValue);
+        }
+
+        private void OnAutogenerateToggleChanged(ChangeEvent<bool> args)
+        {
+            SceneToolsService.ClassGeneration.IsAutoGenerateEnabled = args.newValue;
         }
 
         private void SetSectionVisibility(bool isVisible)

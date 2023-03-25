@@ -11,10 +11,11 @@ namespace Sandland.SceneTool.Editor.Services
     {
         public static class ClassGeneration
         {
-            private const string ToggleKey = "sandland-scene-class-generation-toggle";
+            private const string MainToggleKey = "sandland-scene-class-generation-toggle";
             private const string LocationKey = "sandland-scene-class-generation-location";
             private const string ClassNameKey = "sandland-scene-class-generation-class-name";
             private const string NamespaceKey = "sandland-scene-class-generation-namespace";
+            private const string AutogenerateOnChangeToggleKey = "sandland-scene-class-generation-autogenerate-toggle";
             private const string DefaultLocation = "Assets/Sandland/Runtime/";
             private const string DefaultClassName = "SceneList";
             private const string DefaultNamespace = "Sandland";
@@ -22,8 +23,14 @@ namespace Sandland.SceneTool.Editor.Services
 
             public static bool IsEnabled
             {
-                get => EditorPrefs.GetBool(ToggleKey, false);
-                set => EditorPrefs.SetBool(ToggleKey, value);
+                get => EditorPrefs.GetBool(MainToggleKey, false);
+                set => EditorPrefs.SetBool(MainToggleKey, value);
+            }
+            
+            public static bool IsAutoGenerateEnabled
+            {
+                get => EditorPrefs.GetBool(AutogenerateOnChangeToggleKey, true);
+                set => EditorPrefs.SetBool(AutogenerateOnChangeToggleKey, value);
             }
 
             public static string Directory

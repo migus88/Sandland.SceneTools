@@ -17,6 +17,11 @@ namespace Sandland.SceneTool.Editor.Listeners
 
         private static void OnSceneListChanged()
         {
+            if (!SceneToolsService.ClassGeneration.IsAutoGenerateEnabled)
+            {
+                return;
+            }
+            
             var scenes = new List<SceneInfo>();
 
             for (var i = 0; i < EditorBuildSettings.scenes.Length; i++)
