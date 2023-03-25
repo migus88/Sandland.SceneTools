@@ -21,8 +21,8 @@ namespace Sandland.SceneTool.Editor.Views
         public override string StyleSheetName => nameof(SceneSelectorWindow);
 
 
-        private AssetFileInfo[] _sceneInfos;
-        private AssetFileInfo[] _filteredSceneInfos;
+        private SceneInfo[] _sceneInfos;
+        private SceneInfo[] _filteredSceneInfos;
 
         private ListView _sceneList;
         private TextField _searchField;
@@ -72,18 +72,13 @@ namespace Sandland.SceneTool.Editor.Views
             _sceneList.Rebuild();
         }
 
-        private AssetFileInfo[] GetFilteredSceneInfos(string filter = null)
+        private SceneInfo[] GetFilteredSceneInfos(string filter = null)
         {
-            if (string.IsNullOrWhiteSpace(filter))
-            {
-                return _sceneInfos
-                    .OrderByFavorites()
-                    .ToArray();
-            }
-
             return _sceneInfos
-                .Where(s => s.Name.ToUpper().Contains(filter.ToUpper()))
+                .Where(s => string.IsNullOrEmpty(filter) || s.Name.ToUpper().Contains(filter.ToUpper()))
                 .OrderByFavorites()
+                .ThenByDescending(s => s.ImportType == SceneImportType.BuildSettings)
+                .ThenByDescending(s => s.ImportType == SceneImportType.Addressables)
                 .ToArray();
         }
 

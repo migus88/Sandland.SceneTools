@@ -8,9 +8,6 @@ namespace Sandland.SceneTool.Editor.Views
     {
         private const string GlobalStyleSheetName = "SceneToolsMain";
 
-        protected static Texture2D Icon => _icon ??= EditorGUIUtility.IconContent("d_UnityLogo").image as Texture2D;
-        private static Texture2D _icon;
-
         public abstract float MinWidth { get; }
         public abstract float MinHeight { get; }
         public abstract string WindowName { get; }
@@ -21,7 +18,7 @@ namespace Sandland.SceneTool.Editor.Views
         protected void InitWindow(Texture2D overrideIcon = null)
         {
             minSize = new Vector2(MinWidth, MinHeight);
-            titleContent = new GUIContent(WindowName, overrideIcon ? overrideIcon : Icon);
+            titleContent = new GUIContent(WindowName, overrideIcon ? overrideIcon : Icons.SceneToolIcon);
 
             if (docked)
             {

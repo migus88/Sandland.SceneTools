@@ -1,17 +1,44 @@
+using System.Collections.Generic;
+
 namespace Sandland.SceneTool.Editor.Common.Data
 {
-    internal struct SceneInfo
+    internal class SceneInfo : AssetFileInfo
     {
-        public string Name { get; set; }
-
         public int BuildIndex { get; set; }
         public string Address { get; set; }
+        public SceneImportType ImportType { get; set; }
 
-        public SceneInfo(string name, int buildIndex, string address)
+        private SceneInfo(string name, string path, string guid, List<string> labels) : base(name, path, guid, labels)
         {
-            Name = name;
-            BuildIndex = buildIndex;
-            Address = address;
+        }
+
+        public static class Create
+        {
+            public static SceneInfo Addressable(string address, string name = null, string path = null, string guid = null, List<string> labels = null)
+            {
+                return new SceneInfo(name, path, guid, labels)
+                {
+                    ImportType = SceneImportType.Addressables,
+                    Address = address
+                };
+            }
+            
+            public static SceneInfo Default(string name, string path, string guid, List<string> labels = null)
+            {
+                return new SceneInfo(name, path, guid, labels)
+                {
+                    ImportType = SceneImportType.None
+                };
+            }
+            
+            public static SceneInfo BuiltIn(string name, int buildIndex, string path, string guid, List<string> labels = null)
+            {
+                return new SceneInfo(name, path, guid, labels)
+                {
+                    ImportType = SceneImportType.BuildSettings,
+                    BuildIndex = buildIndex
+                };
+            }
         }
     }
 }

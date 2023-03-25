@@ -6,7 +6,6 @@ using Sandland.SceneTool.Editor.Common.Data;
 using Sandland.SceneTool.Editor.Common.Utils;
 using Sandland.SceneTool.Editor.Services;
 using UnityEditor;
-using UnityEngine;
 
 #if SANDLAND_ADDRESSABLES
 using UnityEditor.AddressableAssets;
@@ -91,14 +90,15 @@ namespace Sandland.SceneTool.Editor.Listeners
             {
                 var sceneAsset = EditorBuildSettings.scenes[i];
                 var name = Path.GetFileNameWithoutExtension(sceneAsset.path);
-                scenes.Add(new SceneInfo(name, i, null));
+                var info = SceneInfo.Create.BuiltIn(name, i, null, null);
+                scenes.Add(info);
             }
 
 #if SANDLAND_ADDRESSABLES
 
             var addressableScenes = AddressableAssetSettingsDefaultObject.Settings.groups.SelectMany(g => g.entries)
                 .Where(e => EditorUtility.IsPersistent(e.MainAsset) && e.MainAsset is SceneAsset)
-                .Select(e => new SceneInfo(e.address, 0, e.address))
+                .Select(e => SceneInfo.Create.Addressable(e.address, e.address))
                 .ToList();
 
             scenes.AddRange(addressableScenes);

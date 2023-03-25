@@ -40,7 +40,7 @@ namespace Sandland.SceneTool.Editor.Services
             FavoritesChanged?.Invoke();
         }
 
-        public static IEnumerable<AssetFileInfo> OrderByFavorites(this IEnumerable<AssetFileInfo> infos) =>
+        public static IOrderedEnumerable<SceneInfo> OrderByFavorites(this IEnumerable<SceneInfo> infos) =>
             infos.OrderByDescending(i => i.IsFavorite());
     }
 }

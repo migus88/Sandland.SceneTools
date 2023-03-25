@@ -10,9 +10,6 @@ namespace Sandland.SceneTool.Editor.Views
 {
     internal class SceneItemView : VisualElement, IDisposable
     {
-        private static Texture2D Icon => _icon ??= EditorGUIUtility.IconContent("SceneAsset Icon").image as Texture2D;
-        private static Texture2D _icon;
-
         private readonly Image _iconImage;
         private readonly FavoritesButton _favoritesButton;
         private readonly LinkButton _button;
@@ -28,7 +25,6 @@ namespace Sandland.SceneTool.Editor.Views
             _button = this.Q<LinkButton>("scene-button");
             _favoritesButton = this.Q<FavoritesButton>("favorites-button");
 
-            _iconImage.image = Icon;
             _button.Clicked += OnOpenSceneButtonClicked;
             RegisterCallback<DetachFromPanelEvent>(OnDetachFromPanel);
 
@@ -40,11 +36,13 @@ namespace Sandland.SceneTool.Editor.Views
             Selection.activeObject = AssetDatabase.LoadAssetAtPath<SceneAsset>(_sceneInfo.Path);
         }
 
-        public void Init(AssetFileInfo info)
+        public void Init(SceneInfo info)
         {
             _sceneInfo = info;
             _button.text = _sceneInfo.Name;
             _favoritesButton.Init(_sceneInfo);
+            
+            _iconImage.image = info.GetSceneIcon();
 
             ResetInlineStyles();
         }
