@@ -1,7 +1,10 @@
 {
   "name": "Sandland.SceneTool.Editor",
   "rootNamespace": "Sandland.SceneTool.Editor",
-  "references": [],
+  "references": [
+    "Unity.Addressables",
+    "Unity.Addressables.Editor"
+  ],
   "includePlatforms": [
     "Editor"
   ],

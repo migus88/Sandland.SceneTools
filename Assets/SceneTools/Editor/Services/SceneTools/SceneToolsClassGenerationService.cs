@@ -15,7 +15,9 @@ namespace Sandland.SceneTool.Editor.Services
             private const string LocationKey = "sandland-scene-class-generation-location";
             private const string ClassNameKey = "sandland-scene-class-generation-class-name";
             private const string NamespaceKey = "sandland-scene-class-generation-namespace";
+            private const string AddressablesSupportKey = "sandland-scene-class-generation-addressables-support";
             private const string AutogenerateOnChangeToggleKey = "sandland-scene-class-generation-autogenerate-toggle";
+            
             private const string DefaultLocation = "Assets/Sandland/Runtime/";
             private const string DefaultClassName = "SceneList";
             private const string DefaultNamespace = "Sandland";
@@ -31,6 +33,12 @@ namespace Sandland.SceneTool.Editor.Services
             {
                 get => EditorPrefs.GetBool(AutogenerateOnChangeToggleKey, true);
                 set => EditorPrefs.SetBool(AutogenerateOnChangeToggleKey, value);
+            }
+            
+            public static bool IsAddressablesSupportEnabled
+            {
+                get => EditorPrefs.GetBool(AddressablesSupportKey, false);
+                set => EditorPrefs.SetBool(AddressablesSupportKey, value);
             }
 
             public static string Directory
@@ -59,6 +67,8 @@ namespace Sandland.SceneTool.Editor.Services
                     $"\t\t\tpublic const int {s.Name.ToPascalCase()} = {s.BuildIndex.ToString()};");
                 var builtInNames = scenes.Select(s =>
                     $"\t\t\tpublic const string {s.Name.ToPascalCase()} = \"{s.Name}\";");
+                var addresses = scenes.Where(s => !string.IsNullOrWhiteSpace(s.Address))
+                    .Select(s => $"\t\t\tpublic const string {s.Address.ToPascalCase()} = \"{s.Address}\";");
 
                 var content = $"namespace {Namespace}\n" +
                               $"{{\n" +
@@ -71,11 +81,11 @@ namespace Sandland.SceneTool.Editor.Services
                               $"\n\t\tpublic class Indexes\n" +
                               $"\t\t{{\n" +
                               string.Join("\n", builtInIndexes) +
-                              $"\n\t\t}}\n" +
+                              $"\n\t\t}}\n\n" +
                               "\t\tpublic class Addressables\n" +
                               $"\t\t{{\n" +
-                              "\n" +
-                              $"\t\t}}\n" +
+                              string.Join("\n", addresses) +
+                              $"\n\t\t}}\n" +
                               $"\t}}\n" +
                               $"}}\n";
 

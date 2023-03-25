@@ -5,12 +5,13 @@ namespace Sandland.SceneTool.Editor.Common.Data
         public string Name { get; set; }
 
         public int BuildIndex { get; set; }
-        //TODO: Implement support for addressables scenes
+        public string Address { get; set; }
 
-        public SceneInfo(string name, int buildIndex)
+        public SceneInfo(string name, int buildIndex, string address)
         {
             Name = name;
             BuildIndex = buildIndex;
+            Address = address;
         }
     }
 }
