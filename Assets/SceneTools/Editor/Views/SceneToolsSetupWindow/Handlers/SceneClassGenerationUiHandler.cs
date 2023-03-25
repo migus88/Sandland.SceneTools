@@ -45,18 +45,18 @@ namespace Sandland.SceneTool.Editor.Views.Handlers
         {
             _locationButton.RegisterCallback<ClickEvent>(OnLocationClicked);
             _mainToggle.RegisterValueChangedCallback(OnMainToggleChanged);
-            _autogenerateOnChangeToggle.RegisterValueChangedCallback(OnAutogenerateToggleChanged);
         }
 
         public void UnsubscribeFromEvents()
         {
             _locationButton.UnregisterCallback<ClickEvent>(OnLocationClicked);
             _mainToggle.UnregisterValueChangedCallback(OnMainToggleChanged);
-            _autogenerateOnChangeToggle.UnregisterValueChangedCallback(OnAutogenerateToggleChanged);
         }
 
         public void Apply()
         {
+            SceneToolsService.ClassGeneration.IsEnabled = _mainToggle.value;
+
             if (!SceneToolsService.ClassGeneration.IsEnabled)
             {
                 DefineUtils.RemoveDefine(ScriptDefine);
@@ -68,6 +68,7 @@ namespace Sandland.SceneTool.Editor.Views.Handlers
             SceneToolsService.ClassGeneration.Directory = _locationText.text;
             SceneToolsService.ClassGeneration.Namespace = _namespaceText.text;
             SceneToolsService.ClassGeneration.ClassName = _classNameText.text;
+            SceneToolsService.ClassGeneration.IsAutoGenerateEnabled = _autogenerateOnChangeToggle.value;
 
             if (!AssetDatabase.IsValidFolder(_locationText.text))
             {
@@ -77,13 +78,7 @@ namespace Sandland.SceneTool.Editor.Views.Handlers
 
         private void OnMainToggleChanged(ChangeEvent<bool> args)
         {
-            SceneToolsService.ClassGeneration.IsEnabled = args.newValue;
             SetSectionVisibility(args.newValue);
-        }
-
-        private void OnAutogenerateToggleChanged(ChangeEvent<bool> args)
-        {
-            SceneToolsService.ClassGeneration.IsAutoGenerateEnabled = args.newValue;
         }
 
         private void SetSectionVisibility(bool isVisible)
