@@ -69,11 +69,7 @@ namespace Sandland.SceneTool.Editor.Views
         {
             _filteredSceneInfos = GetFilteredSceneInfos(filter);
             _sceneList.itemsSource = _filteredSceneInfos;
-            #if UNITY_2021_3_OR_NEWER
             _sceneList.Rebuild();
-            #else
-            _sceneList.Refresh();
-            #endif
         }
 
         private SceneInfo[] GetFilteredSceneInfos(string filter = null)
