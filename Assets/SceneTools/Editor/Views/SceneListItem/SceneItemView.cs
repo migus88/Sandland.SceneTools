@@ -10,6 +10,8 @@ namespace Sandland.SceneTool.Editor.Views
 {
     internal class SceneItemView : VisualElement, IDisposable
     {
+        public const float FixedHeight = 45;
+        
         private readonly Image _iconImage;
         private readonly FavoritesButton _favoritesButton;
         private readonly LinkButton _button;

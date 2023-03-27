@@ -53,6 +53,7 @@ namespace Sandland.SceneTool.Editor.Views
             _sceneList = rootVisualElement.Q<ListView>("scenes-list");
             _sceneList.makeItem = () => new SceneItemView();
             _sceneList.bindItem = InitListItem;
+            _sceneList.fixedItemHeight = SceneItemView.FixedHeight;
             _sceneList.itemsSource = _filteredSceneInfos;
 
             _searchField = rootVisualElement.Q<TextField>("scenes-search");
