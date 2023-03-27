@@ -11,15 +11,29 @@ namespace Sandland.SceneTool.Editor.Views
     {
         private static Texture2D Icon => _icon ??= EditorGUIUtility.IconContent("Favorite On Icon").image as Texture2D;
         private static Texture2D _icon;
+        
+        public bool IsFavorite { get; private set; }
 
         private Image _starImage;
         private AssetFileInfo _fileInfo;
-
-        public bool IsFavorite { get; private set; }
+        private bool _isUiInitialized = false;
 
         public void Init(AssetFileInfo info)
         {
             _fileInfo = info;
+            
+            InitializeUI();
+
+            var isFavorite = _fileInfo.IsFavorite();
+            SetState(isFavorite);
+        }
+
+        private void InitializeUI()
+        {
+            if (_isUiInitialized)
+            {
+                return;
+            }
 
             _starImage = new Image
             {
@@ -29,8 +43,7 @@ namespace Sandland.SceneTool.Editor.Views
 
             this.AddManipulator(new Clickable(OnClick));
 
-            var isFavorite = _fileInfo.IsFavorite();
-            SetState(isFavorite);
+            _isUiInitialized = true;
         }
 
         private void OnClick()
