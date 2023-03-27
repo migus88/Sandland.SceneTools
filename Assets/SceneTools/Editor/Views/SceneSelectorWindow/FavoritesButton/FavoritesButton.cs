@@ -16,35 +16,27 @@ namespace Sandland.SceneTool.Editor.Views
 
         private Image _starImage;
         private AssetFileInfo _fileInfo;
-        private bool _isUiInitialized = false;
 
-        public void Init(AssetFileInfo info)
+        public FavoritesButton()
         {
-            _fileInfo = info;
+            this.AddManipulator(new Clickable(OnClick));
             
-            InitializeUI();
-
-            var isFavorite = _fileInfo.IsFavorite();
-            SetState(isFavorite);
-        }
-
-        private void InitializeUI()
-        {
-            if (_isUiInitialized)
-            {
-                return;
-            }
-
+            // TODO: Extract this part into UXML instead
             _starImage = new Image
             {
                 image = Icon
             };
+            
             Add(_starImage);
-
-            this.AddManipulator(new Clickable(OnClick));
-
-            _isUiInitialized = true;
         }
+
+        public void Init(AssetFileInfo info)
+        {
+            _fileInfo = info;
+            var isFavorite = _fileInfo.IsFavorite();
+            SetState(isFavorite);
+        }
+
 
         private void OnClick()
         {
