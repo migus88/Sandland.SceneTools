@@ -1,12 +1,3 @@
-/*
-    Palette:
-    402c2c - darkest
-    5C3D2E - brown
-    6b5246 - light brown
-    B85C38 - orange
-    E0C097 - biege
-*/
-
 #scenes-list {
     width: 100%;
     height: 100%;
@@ -22,8 +13,13 @@ SceneItemView {
     height: 45px;
 }
 
+
+SceneItemView:checked {
+    background-color: var(--background-color);
+}
+
 SceneItemView:hover {
-    background-color: #5C3D2E;
+    background-color: var(--hover-color);
 }
 
 #scene-button {

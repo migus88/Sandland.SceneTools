@@ -6,6 +6,7 @@ namespace Sandland.SceneTool.Editor.Views
 {
     internal abstract class SceneToolsWindowBase : EditorWindow
     {
+        private const string DefaultThemeStyleSheetName = "sandland-default-theme";
         private const string GlobalStyleSheetName = "SceneToolsMain";
 
         public abstract float MinWidth { get; }
@@ -38,8 +39,10 @@ namespace Sandland.SceneTool.Editor.Views
             var visualTree = AssetDatabaseUtils.FindAndLoadVisualTreeAsset(VisualTreeName);
             visualTree.CloneTree(rootVisualElement);
 
+            var defaultTheme = AssetDatabaseUtils.FindAndLoadStyleSheet(DefaultThemeStyleSheetName);
             var globalStyleSheet = AssetDatabaseUtils.FindAndLoadStyleSheet(GlobalStyleSheetName);
             var styleSheet = AssetDatabaseUtils.FindAndLoadStyleSheet(StyleSheetName);
+            rootVisualElement.styleSheets.Add(defaultTheme);
             rootVisualElement.styleSheets.Add(globalStyleSheet);
             rootVisualElement.styleSheets.Add(styleSheet);
             InitGui();

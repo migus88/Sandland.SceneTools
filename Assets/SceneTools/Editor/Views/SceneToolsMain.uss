@@ -1,17 +1,8 @@
-/*
-    Palette:
-    402c2c - darkest
-    5C3D2E - brown
-    6b5246 - light brown
-    B85C38 - orange
-    E0C097 - biege
-*/
-
 LinkButton {
     flex-grow: 0;
     flex-shrink: 0;
     cursor: link;
-    color: #E0C097;
+    color: var(--secondary-text-color);
 }
 
 .spacer {
@@ -21,7 +12,7 @@ LinkButton {
 
 .horizontal-spacer {
     height: 1px;
-    background-color: #E0C097;
+    background-color: var(--secondary-text-color);
     margin-top: 11px;
     margin-bottom: 11px;
 }
@@ -39,14 +30,14 @@ LinkButton {
     padding-bottom: 11px;
     margin-top: 11px;
     margin-bottom: 11px;
-    background-color: #B85C38;
-    color: #E0C097;
+    background-color: var(--title-color);
+    color: var(--secondary-text-color);
 }
 
 .main-content {
-    border-top-color: #402c2c;
+    border-top-color: var(--title-color);
     border-top-width: 20px;
-    background-color: #6b5246;
+    background-color: var(--background-color);
 }
 
 Toggle #unity-checkmark {
@@ -58,20 +49,28 @@ Toggle #unity-checkmark {
 }
 
 Button {
-    background-color: #5C3D2E;
-    color: #E0C097;
+    background-color: var(--button-color);
+    color: var(--secondary-text-color);
     font-size: 15px;
-    border-color: black;
+    border-color: var(--border-color);
 }
 
 Button:hover {
-    background-color: #75503d;
+    background-color: var(--hover-color);
 }
 
 Button:active {
-    background-color: #3b271d;
+    background-color: var(--active-color);
 }
 
 Button:focus {
-    border-color: black;
+    border-color: var(--border-color);
+}
+
+TextField:focus>Label {
+    color: var(--focus-color);
+}
+
+TextField:focus>TextInput {
+    border-color: var(--focus-color);
 }
