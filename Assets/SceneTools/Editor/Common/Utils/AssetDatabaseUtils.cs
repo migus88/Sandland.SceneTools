@@ -38,14 +38,13 @@ namespace Sandland.SceneTool.Editor.Common.Utils
             var query = string.IsNullOrEmpty(name) ? $"t:{typeName}" : $"{name} t:{typeName}";
             var guids = AssetDatabase.FindAssets(query);
 
-            switch (guids.Length)
+            if (guids.Length == 0)
             {
-                case 0:
-                    throw new FileNotFoundException($"Cant locate {typeName} file with the name: {name}");
-                case > 1:
-                    Debug.LogWarning(
-                        $"Found more than one {typeName} file with the name: {name}; Loading only the first");
-                    break;
+                throw new FileNotFoundException($"Cant locate {typeName} file with the name: {name}");
+            }
+            else if (guids.Length > 1)
+            {
+                Debug.LogWarning( $"Found more than one {typeName} file with the name: {name}; Loading only the first");
             }
 
             var path = AssetDatabase.GUIDToAssetPath(guids.First());
