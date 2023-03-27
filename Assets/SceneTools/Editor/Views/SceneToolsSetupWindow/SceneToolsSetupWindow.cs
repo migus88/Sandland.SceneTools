@@ -18,7 +18,7 @@ namespace Sandland.SceneTool.Editor.Views
         public override string VisualTreeName => nameof(SceneToolsSetupWindow);
         public override string StyleSheetName => nameof(SceneToolsSetupWindow);
 
-        private readonly List<ISceneToolsSetupUiHandler> _uiHandlers = new List<ISceneToolsSetupUiHandler>();
+        private readonly List<ISceneToolsSetupUiHandler> _uiHandlers = new();
 
         private Button _saveAllButton;
 

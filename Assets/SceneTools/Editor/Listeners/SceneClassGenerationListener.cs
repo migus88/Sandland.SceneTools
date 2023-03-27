@@ -31,24 +31,36 @@ namespace Sandland.SceneTool.Editor.Listeners
         private static void OnAddressablesModification(AddressableAssetSettings settings,
             AddressableAssetSettings.ModificationEvent args, object obj)
         {
-            if (obj is AddressableAssetEntry entry && IsShouldGenerateClass(args, entry))
+            switch (obj)
             {
-                GenerateScenesClass();
-            }
-            else if (obj is IList<AddressableAssetEntry> entries)
-            {
-                foreach (var e in entries)
+                case AddressableAssetEntry entry:
                 {
-                    var shouldGenerate = IsShouldGenerateClass(args, e);
+                    var shouldGenerate = IsShouldGenerateClass(args, entry);
                     if (shouldGenerate)
                     {
                         GenerateScenesClass();
                     }
+
+                    break;
+                }
+                case IList<AddressableAssetEntry> entries:
+                {
+                    foreach (var e in entries)
+                    {
+                        var shouldGenerate = IsShouldGenerateClass(args, e);
+                        if (shouldGenerate)
+                        {
+                            GenerateScenesClass();
+                        }
+                    }
+
+                    break;
                 }
             }
         }
 
-        private static bool IsShouldGenerateClass(AddressableAssetSettings.ModificationEvent evt, AddressableAssetEntry entry)
+        private static bool IsShouldGenerateClass(AddressableAssetSettings.ModificationEvent evt,
+            AddressableAssetEntry entry)
         {
             var assetPath = entry.AssetPath;
             var assetType = AssetDatabase.GetMainAssetTypeAtPath(assetPath);
