@@ -74,8 +74,10 @@ namespace Sandland.SceneTool.Editor.Views
 
         private SceneInfo[] GetFilteredSceneInfos(string filter = null)
         {
+            var isFilterEmpty = string.IsNullOrWhiteSpace(filter);
+            
             return _sceneInfos
-                .Where(s => string.IsNullOrEmpty(filter) || s.Name.ToUpper().Contains(filter.ToUpper()))
+                .Where(s => isFilterEmpty || s.Name.ToUpper().Contains(filter.ToUpper()))
                 .OrderByFavorites()
                 .ThenByDescending(s => s.ImportType == SceneImportType.BuildSettings)
                 .ThenByDescending(s => s.ImportType == SceneImportType.Addressables)
