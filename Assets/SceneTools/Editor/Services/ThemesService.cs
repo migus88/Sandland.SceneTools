@@ -20,7 +20,7 @@ namespace Sandland.SceneTool.Editor.Services
             set
             {
                 EditorPrefs.SetString(SelectedThemePathKey, value);
-                ThemeChanged?.Invoke(SelectedTheme);
+                ThemeChanged?.Invoke(GetSelectedTheme());
             }
         }
 
@@ -28,6 +28,16 @@ namespace Sandland.SceneTool.Editor.Services
         public static string DefaultThemePath =>
             AssetDatabaseUtils.FindAssets<StyleSheet>(DefaultThemeStyleSheetName).First().Path;
 
-        public static StyleSheet SelectedTheme => AssetDatabase.LoadAssetAtPath<StyleSheet>(SelectedThemePath);
+        public static StyleSheet GetSelectedTheme()
+        {
+            var selectedTheme = AssetDatabase.LoadAssetAtPath<StyleSheet>(SelectedThemePath);
+            if (selectedTheme != null)
+            {
+                return selectedTheme;
+            }
+
+            SelectedThemePath = DefaultThemePath;
+            return GetSelectedTheme();
+        }
     }
 }

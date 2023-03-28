@@ -1,3 +1,11 @@
+* {
+    color: var(--primary-text-color);
+}
+
+*:active {
+    color: var(--secondary-text-color);
+}
+
 LinkButton {
     flex-grow: 0;
     flex-shrink: 0;
@@ -50,17 +58,20 @@ Toggle #unity-checkmark {
 
 Button {
     background-color: var(--button-color);
+}
+
+Button:hover {
+    background-color: var(--accent-color);
+}
+
+Button, Button:active {
     color: var(--secondary-text-color);
     font-size: 15px;
     border-color: var(--border-color);
 }
 
-Button:hover {
-    background-color: var(--hover-color);
-}
-
 Button:active {
-    background-color: var(--active-color);
+    background-color: var(--focus-color);
 }
 
 Button:focus {
@@ -68,9 +79,13 @@ Button:focus {
 }
 
 TextField:focus>Label {
-    color: var(--focus-color);
+    color: var(--accent-color);
 }
 
 TextField:focus>TextInput {
-    border-color: var(--focus-color);
+    border-color: var(--accent-color);
+}
+
+TextInput {
+    color: var(--secondary-text-color);
 }

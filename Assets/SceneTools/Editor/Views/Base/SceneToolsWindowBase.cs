@@ -43,10 +43,11 @@ namespace Sandland.SceneTool.Editor.Views
             var visualTree = AssetDatabaseUtils.FindAndLoadVisualTreeAsset(VisualTreeName);
             visualTree.CloneTree(rootVisualElement);
 
-            _theme = ThemesService.SelectedTheme;
+            _theme = ThemesService.GetSelectedTheme();
             
             var globalStyleSheet = AssetDatabaseUtils.FindAndLoadStyleSheet(GlobalStyleSheetName);
             var styleSheet = AssetDatabaseUtils.FindAndLoadStyleSheet(StyleSheetName);
+            
             rootVisualElement.styleSheets.Add(_theme);
             rootVisualElement.styleSheets.Add(globalStyleSheet);
             rootVisualElement.styleSheets.Add(styleSheet);

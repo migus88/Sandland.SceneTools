@@ -22,12 +22,8 @@
     background-color: var(--button-color);
 }
 
-.hover-color-display {
-    background-color: var(--hover-color);
-}
-
-.active-color-display {
-    background-color: var(--active-color);
+.accent-color-display {
+    background-color: var(--accent-color);
 }
 
 .focus-color-display {
@@ -56,4 +52,5 @@ ThemeDisplay>VisualElement.unity-base-field__input {
 ThemeDisplay>Label {
     min-width: 200px;
     max-width: 200px;
+    display: none;
 }

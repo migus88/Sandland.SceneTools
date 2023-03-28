@@ -11,8 +11,7 @@
                 <engine:VisualElement class="primary-text-color-display"/>
                 <engine:VisualElement class="secondary-text-color-display"/>
                 <engine:VisualElement class="button-color-display"/>
-                <engine:VisualElement class="hover-color-display"/>
-                <engine:VisualElement class="active-color-display"/>
+                <engine:VisualElement class="accent-color-display"/>
                 <engine:VisualElement class="focus-color-display"/>
             </engine:VisualElement>
 </engine:UXML>

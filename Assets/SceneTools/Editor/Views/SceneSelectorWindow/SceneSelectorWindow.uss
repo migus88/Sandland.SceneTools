@@ -19,7 +19,7 @@ SceneItemView:checked {
 }
 
 SceneItemView:hover {
-    background-color: var(--hover-color);
+    background-color: var(--accent-color);
 }
 
 #scene-button {
