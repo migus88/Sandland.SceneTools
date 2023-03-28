@@ -1,6 +1,9 @@
+using System;
 using Sandland.SceneTool.Editor.Common.Utils;
+using Sandland.SceneTool.Editor.Services;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace Sandland.SceneTool.Editor.Views
 {
@@ -13,6 +16,8 @@ namespace Sandland.SceneTool.Editor.Views
         public abstract string WindowName { get; }
         public abstract string VisualTreeName { get; }
         public abstract string StyleSheetName { get; }
+
+        private StyleSheet _theme;
 
 
         protected void InitWindow(Texture2D overrideIcon = null)
@@ -38,13 +43,43 @@ namespace Sandland.SceneTool.Editor.Views
             var visualTree = AssetDatabaseUtils.FindAndLoadVisualTreeAsset(VisualTreeName);
             visualTree.CloneTree(rootVisualElement);
 
+            _theme = ThemesService.GetSelectedTheme();
+            
             var globalStyleSheet = AssetDatabaseUtils.FindAndLoadStyleSheet(GlobalStyleSheetName);
             var styleSheet = AssetDatabaseUtils.FindAndLoadStyleSheet(StyleSheetName);
+            
+            rootVisualElement.styleSheets.Add(_theme);
             rootVisualElement.styleSheets.Add(globalStyleSheet);
             rootVisualElement.styleSheets.Add(styleSheet);
             InitGui();
         }
 
+        protected virtual void OnEnable()
+        {
+            ThemesService.ThemeChanged += RefreshTheme;
+        }
+
+        protected virtual void OnDisable()
+        {
+            ThemesService.ThemeChanged -= RefreshTheme;
+        }
+
         protected abstract void InitGui();
+
+        protected void RefreshTheme(StyleSheet theme)
+        {
+            if (_theme == theme)
+            {
+                return;
+            }
+            
+            if(_theme != null)
+            {
+                rootVisualElement.styleSheets.Remove(_theme);
+            }
+
+            _theme = theme;
+            rootVisualElement.styleSheets.Add(_theme);
+        }
     }
 }

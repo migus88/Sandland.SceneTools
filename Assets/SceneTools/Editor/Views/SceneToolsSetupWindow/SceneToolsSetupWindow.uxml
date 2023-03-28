@@ -10,10 +10,11 @@
     </engine:VisualElement>
     <engine:VisualElement class="content-block main-content">
         <engine:VisualElement class="horizontal-spacer"/>
-        <engine:Toggle name="scene-class-generation-toggle" text="Scenes Class Generation"/>
+        <engine:Toggle name="scene-class-generation-toggle" class="block-title" text="Scenes Class Generation"/>
         <engine:VisualElement name="scene-class-generation-block">
             <engine:VisualElement class="scene-class-generation-property">
-                <engine:Toggle name="scene-class-changes-detection-toggle" text="Generate on 'Built-in Scenes' change" tooltip="If checked, anytime there is a change detected in 'Scenes In Build', the file will be regenerated."/>
+                <engine:Toggle name="scene-class-changes-detection-toggle" text="Generate on 'Built-in Scenes' change"
+                               tooltip="If checked, anytime there is a change detected in 'Scenes In Build', the file will be regenerated."/>
             </engine:VisualElement>
             <engine:VisualElement class="scene-class-generation-property">
                 <engine:Toggle name="scene-class-addressables-support-toggle" text="Addressable Scenes Support"/>
@@ -29,6 +30,11 @@
                                   text="Assets/Sandland/Runtime"/>
                 <engine:Button name="scene-class-location-button" text="..."/>
             </engine:VisualElement>
+        </engine:VisualElement>
+        <engine:VisualElement class="horizontal-spacer"/>
+        <engine:VisualElement name="theme-selection-block">
+            <engine:Label class="block-title" text="Theme Selection"/>
+            <engine:RadioButtonGroup name="theme-selection-group"/>
         </engine:VisualElement>
         <engine:VisualElement class="horizontal-spacer"/>
         <engine:Button name="save-button" text="Save"/>

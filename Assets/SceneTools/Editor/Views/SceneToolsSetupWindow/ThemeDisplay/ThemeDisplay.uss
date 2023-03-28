@@ -1,0 +1,56 @@
+.title-color-display {
+    background-color: var(--title-color);
+}
+
+.background-color-display {
+    background-color: var(--background-color);
+}
+
+.border-color-display {
+    background-color: var(--border-color);
+}
+
+.primary-text-color-display {
+    background-color: var(--primary-text-color);
+}
+
+.secondary-text-color-display {
+    background-color: var(--secondary-text-color);
+}
+
+.button-color-display {
+    background-color: var(--button-color);
+}
+
+.accent-color-display {
+    background-color: var(--accent-color);
+}
+
+.focus-color-display {
+    background-color: var(--focus-color);
+}
+
+.colors-display {
+    flex-direction: row;
+    border-color: var(--border-color);
+    border-width: 1px;
+    margin-left: 10px;
+}
+
+.colors-display>VisualElement {
+    height: 20px;
+    width: 40px;
+}
+
+RadioButton>Label {
+    display: none;
+}
+
+ThemeDisplay>VisualElement.unity-base-field__input {
+    flex-grow: 0;
+}
+ThemeDisplay>Label {
+    min-width: 200px;
+    max-width: 200px;
+    display: none;
+}

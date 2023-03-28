@@ -35,13 +35,15 @@ namespace Sandland.SceneTool.Editor.Views
             window._searchField?.Focus();
         }
 
-        private void OnEnable()
+        protected override void OnEnable()
         {
+            base.OnEnable();
             FavoritesService.FavoritesChanged += OnFavoritesChanged;
         }
 
-        private void OnDisable()
+        protected override void OnDisable()
         {
+            base.OnDisable();
             FavoritesService.FavoritesChanged -= OnFavoritesChanged;
         }
 

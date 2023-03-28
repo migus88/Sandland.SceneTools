@@ -1,12 +1,3 @@
-/*
-    Palette:
-    402c2c - darkest
-    5C3D2E - brown
-    6b5246 - light brown
-    B85C38 - orange
-    E0C097 - biege
-*/
-
 .scene-class-generation-property {
     flex-direction: row;
     margin-top: 6px;
@@ -28,23 +19,28 @@
 }
 
 #scene-class-location-text Label:disabled {
-    color: white;
+    color: var(--primary-text-color);
 }
 
 .scene-class-generation-property TextInput {
     font-size: 15px;
 }
 
-.main-content > Toggle {
-    font-size: 20px;
-    margin-bottom: 15px;
-}
-
 .main-content > Toggle Label {
-    color: #E0C097;
+    color: var(--secondary-text-color);
 }
 
 .main-content > Toggle #unity-checkmark {
     width: 20px;
     height: 20px;
+}
+
+.block-title {
+    color: var(--secondary-text-color);
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+#theme-selection-group {
+    flex-direction: column;
 }
