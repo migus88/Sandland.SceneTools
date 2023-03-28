@@ -15,6 +15,7 @@ Enhance your Unity scene management workflow with this powerful set of editor to
         - [Scene Selector Tool](#scene-selector-tool)
         - [Scene Class Generation Tool](#scene-class-generation-tool)
 - [Example of Generated Class Usage](#example-of-generated-class-usage)
+- [Theme Support](#theme-support)
 - [License](#license)
 
 ## Features
@@ -54,7 +55,10 @@ To use a specific version, append a hashtag followed by the version number in a 
 
 1. Navigate to `Tools > Sandland Games > Setup Scene Tools` to enable and configure the tool.
 2. Select the namespace, class name, and location for the generated class.
-3. The class will be re-generated automatically whenever the "Scenes In Build" list changes. Support for Addressable scenes coming soon.
+3. The class will be re-generated automatically whenever the "Scenes In Build" list changes.
+    - If Addressables support is enabled in the "Setup Scene Tools" window, the class will also be regenerated every time there is a scene-related change in the Addressables.
+
+To enable or disable Addressables support, open the "Setup Scene Tools" window, and toggle the corresponding option.
 
 ## Example of Generated Class Usage
 
@@ -78,6 +82,31 @@ public class SceneLoader : MonoBehaviour
     }
 }
 ```
+## Theme Support
+
+Sandland.SceneTools now supports custom themes. You can choose from built-in themes or create your own. To select a theme, open the "Setup Scene Tools" window.
+
+To create your own theme, follow these steps:
+
+1. Create a USS file anywhere in your project (preferably inside one of the Editor folders, because you don't need it in the build). Name this file as you wish.
+2. Add a label to the USS file by selecting the file in the Project window, and in the Inspector window, click the "Labels" icon (a tag icon). Type `Sandland-theme` into the input field and press Enter to add the label.
+3. Edit the content of the USS file to look like this:
+
+```css
+:root {
+    --title-color: #B85C38;
+    --background-color: #6b5246;
+    --border-color: black;
+    --primary-text-color: #E0C097;
+    --secondary-text-color: #ffffff;
+    --button-color: #5C3D2E;
+    --accent-color: #e0723f;
+    --focus-color: #c48664;
+}
+```
+
+4. Replace the color values with your preferred colors.
+5. Restart the "Setup Scene Tools" window, and you should see your color palette as an option in the themes list.
 
 ## License
 This project is licensed under the MIT License. See the [license file](https://github.com/migus88/Sandland.SceneTools/blob/main/LICENSE) for details.
