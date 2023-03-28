@@ -1,11 +1,11 @@
 :root {
     --title-color: #B85C38;
+    --background-color: #6b5246;
+    --border-color: black;
     --primary-text-color: #ffffff;
     --secondary-text-color: #E0C097;
     --button-color: #5C3D2E;
     --hover-color: #75503d;
     --active-color: #824626;
     --focus-color: #c48664;
-    --background-color: #6b5246;
-    --border-color: black;
 }

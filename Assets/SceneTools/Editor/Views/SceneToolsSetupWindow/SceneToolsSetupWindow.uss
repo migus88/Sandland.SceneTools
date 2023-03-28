@@ -26,11 +26,6 @@
     font-size: 15px;
 }
 
-.main-content > Toggle {
-    font-size: 20px;
-    margin-bottom: 15px;
-}
-
 .main-content > Toggle Label {
     color: var(--secondary-text-color);
 }
@@ -38,4 +33,14 @@
 .main-content > Toggle #unity-checkmark {
     width: 20px;
     height: 20px;
+}
+
+.block-title {
+    color: var(--secondary-text-color);
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+#theme-selection-group {
+    flex-direction: column;
 }

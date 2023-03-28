@@ -32,8 +32,8 @@ namespace Sandland.SceneTool.Editor.Views
 
         protected override void InitGui()
         {
-            var sceneClassGenerationUiHandler = new SceneClassGenerationUiHandler(rootVisualElement);
-            _uiHandlers.Add(sceneClassGenerationUiHandler);
+            _uiHandlers.Add(new SceneClassGenerationUiHandler(rootVisualElement));
+            _uiHandlers.Add(new ThemesSelectionUiHandler(rootVisualElement));
 
             _saveAllButton = rootVisualElement.Q<Button>("save-button");
 
