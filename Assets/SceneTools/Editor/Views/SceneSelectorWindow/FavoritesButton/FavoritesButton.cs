@@ -9,25 +9,16 @@ namespace Sandland.SceneTool.Editor.Views
 {
     internal class FavoritesButton : VisualElement
     {
-        private static Texture2D Icon => _icon ??= EditorGUIUtility.IconContent("Favorite On Icon").image as Texture2D;
-        private static Texture2D _icon;
+        private const string FavoriteClassName = "favorite";
         
         public bool IsFavorite { get; private set; }
 
-        private Image _starImage;
+        //private Image _starImage;
         private AssetFileInfo _fileInfo;
 
         public FavoritesButton()
         {
             this.AddManipulator(new Clickable(OnClick));
-            
-            // TODO: Extract this part into UXML instead
-            _starImage = new Image
-            {
-                image = Icon
-            };
-            
-            Add(_starImage);
         }
 
         public void Init(AssetFileInfo info)
@@ -55,7 +46,15 @@ namespace Sandland.SceneTool.Editor.Views
         public void SetState(bool isFavorite)
         {
             IsFavorite = isFavorite;
-            _starImage.tintColor = IsFavorite ? Color.yellow : Color.gray;
+            
+            if (IsFavorite)
+            {
+                AddToClassList(FavoriteClassName);
+            }
+            else
+            {
+                RemoveFromClassList(FavoriteClassName);
+            }
         }
 
         public new class UxmlFactory : UxmlFactory<FavoritesButton, UxmlTraits>

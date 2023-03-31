@@ -1,91 +1,108 @@
 * {
-    color: var(--primary-text-color);
-}
-
-*:active {
     color: var(--secondary-text-color);
+    font-size: var(--font-size);
 }
 
-LinkButton {
-    flex-grow: 0;
-    flex-shrink: 0;
-    cursor: link;
-    color: var(--secondary-text-color);
-}
-
-.spacer {
-    flex-grow: 1;
-    flex-shrink: 1;
-}
-
-.horizontal-spacer {
-    height: 1px;
-    background-color: var(--secondary-text-color);
-    margin-top: 11px;
-    margin-bottom: 11px;
+.sandland-canvas {
+    height: 100%;
+    width: 100%;
+    background-color: var(--primary-background-color);
 }
 
 .content-block {
-    margin-left: 11px;
-    margin-right: 11px;
-    padding: 11px;
+    margin: var(--content-margin);
+    margin-bottom: 0;
+    padding: var(--content-padding);
+    border-radius: var(--border-radius);
+    background-color: var(--secondary-background-color);
+    flex-shrink: 0;
 }
 
 .content-title-block {
-    font-size: 40px;
     align-items: center;
-    padding-top: 11px;
-    padding-bottom: 11px;
-    margin-top: 11px;
-    margin-bottom: 11px;
-    background-color: var(--title-color);
+}
+
+.content-title-block Label {
+    font-size: var(--title-font-size);
+    color: var(--accent-color);
+}
+
+TextInput {
+    background-color: var(--element-background-color);
     color: var(--secondary-text-color);
+    padding: var(--field-padding);
+    border-radius: var(--field-border-radius);
 }
 
-.main-content {
-    border-top-color: var(--title-color);
-    border-top-width: 20px;
-    background-color: var(--background-color);
+TextInput:hover {
+    border-color: var(--selection-color);
 }
 
-Toggle #unity-checkmark {
-    margin-right: 8px;
+TextInput:focus {
+    border-color: var(--accent-color);
+}
+
+TextField {
+    flex-direction: column;
+    margin-bottom: var(--font-size);
+}
+
+TextField>Label {
+    -unity-text-align: middle-left;
+    margin-left: var(--field-padding);
+}
+
+
+Toggle {
+    margin-bottom: var(--font-size);
+}
+
+Toggle>VisualElement {
+    margin-left: var(--field-padding);
+}
+
+.unity-toggle__checkmark {
+    width: var(--font-size);
+    height: var(--font-size);
+    margin-right: var(--field-padding);
+}
+
+Button {
+    background-color: var(--button-color);
+    border-radius: var(--field-border-radius);
+    color: var(--primary-text-color);
+    padding: var(--field-padding);
+    margin-bottom: var(--font-size);
+    border-color: var(--button-color);
+}
+
+Button:hover {
+    background-color: var(--button-hover-color);
+}
+
+Button:active {
+    background-color: var(--button-press-color);
+}
+
+Button:focus {
+    border-color: var(--button-color);
+}
+
+.horizontal-spacer {
+    height: var(--font-size);
+    padding: var(--font-size);
 }
 
 .hidden {
     display: none;
 }
 
-Button {
-    background-color: var(--button-color);
+.block-title {
+    margin-left: var(--field-padding);
 }
 
-Button:hover {
-    background-color: var(--accent-color);
-}
-
-Button, Button:active {
-    color: var(--secondary-text-color);
-    font-size: 15px;
-    border-color: var(--border-color);
-}
-
-Button:active {
-    background-color: var(--focus-color);
-}
-
-Button:focus {
-    border-color: var(--border-color);
-}
-
-TextField:focus>Label {
-    color: var(--accent-color);
-}
-
-TextField:focus>TextInput {
-    border-color: var(--accent-color);
-}
-
-TextInput {
-    color: var(--secondary-text-color);
+.main-content {
+    flex-grow: 1;
+    margin-bottom: var(--content-padding);
+    position: relative;
 }

@@ -5,12 +5,15 @@
         xmlns:editor="UnityEditor.UIElements"
         xsi:noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd"
 >
-    <engine:VisualElement class="content-block content-title-block">
-        <engine:Label name="content-title" text="Scene Selector"/>
-    </engine:VisualElement>
-    <engine:VisualElement class="content-block main-content">
-        <engine:TextField name="scenes-search" label="Search:" Placeholder="Search"/>
-        <engine:VisualElement class="horizontal-spacer"/>
-        <engine:ListView name="scenes-list"/>
+    <engine:VisualElement class="sandland-canvas">
+        <engine:VisualElement class="content-block content-title-block">
+            <engine:Label text="SCENE SELECTOR"/>
+        </engine:VisualElement>
+        <engine:VisualElement class="content-block main-content">
+            <engine:TextField name="scenes-search" label="Search:" Placeholder="Search"/>
+            <engine:VisualElement class="list-view-wrapper">
+                <engine:ListView name="scenes-list"/>
+            </engine:VisualElement>
+        </engine:VisualElement>
     </engine:VisualElement>
 </engine:UXML>

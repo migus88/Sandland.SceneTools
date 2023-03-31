@@ -5,13 +5,13 @@
         xmlns:editor="UnityEditor.UIElements"
         xsi:noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd">
             <engine:VisualElement class="colors-display">
-                <engine:VisualElement class="title-color-display"/>
-                <engine:VisualElement class="background-color-display"/>
-                <engine:VisualElement class="border-color-display"/>
-                <engine:VisualElement class="primary-text-color-display"/>
-                <engine:VisualElement class="secondary-text-color-display"/>
-                <engine:VisualElement class="button-color-display"/>
-                <engine:VisualElement class="accent-color-display"/>
-                <engine:VisualElement class="focus-color-display"/>
+                <engine:VisualElement class="display-primary-background first-display-element"/>
+                <engine:VisualElement class="display-secondary-background"/>
+                <engine:VisualElement class="display-element-background"/>
+                <engine:VisualElement class="display-primary-text"/>
+                <engine:VisualElement class="display-secondary-text"/>
+                <engine:VisualElement class="display-accent"/>
+                <engine:VisualElement class="display-selection"/>
+                <engine:VisualElement class="display-button last-display-element"/>
             </engine:VisualElement>
 </engine:UXML>

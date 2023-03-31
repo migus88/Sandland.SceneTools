@@ -14,7 +14,7 @@ namespace Sandland.SceneTool.Editor.Views
         private const string KeyboardShortcut = " %g";
         private const string WindowMenuItem = MenuItems.Tools.Root + WindowNameInternal + KeyboardShortcut;
 
-        public override float MinWidth => 400;
+        public override float MinWidth => 460;
         public override float MinHeight => 600;
         public override string WindowName => WindowNameInternal;
         public override string VisualTreeName => nameof(SceneSelectorWindow);

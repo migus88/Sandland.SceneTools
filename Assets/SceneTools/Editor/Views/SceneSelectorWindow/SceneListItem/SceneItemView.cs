@@ -10,11 +10,14 @@ namespace Sandland.SceneTool.Editor.Views
 {
     internal class SceneItemView : VisualElement, IDisposable
     {
-        public const float FixedHeight = 45;
+        public const float FixedHeight = 100;
         
         private readonly Image _iconImage;
         private readonly FavoritesButton _favoritesButton;
-        private readonly LinkButton _button;
+        private readonly Label _button;
+        private readonly Label _typeLabel;
+        private readonly VisualElement _textWrapper;
+        private readonly Clickable _clickManipulator;
 
         private AssetFileInfo _sceneInfo;
 
@@ -24,10 +27,14 @@ namespace Sandland.SceneTool.Editor.Views
             visualTree.CloneTree(this);
 
             _iconImage = this.Q<Image>("scene-icon");
-            _button = this.Q<LinkButton>("scene-button");
+            _button = this.Q<Label>("scene-button");
             _favoritesButton = this.Q<FavoritesButton>("favorites-button");
+            _typeLabel = this.Q<Label>("scene-type-label");
+            _textWrapper = this.Q<VisualElement>("scene-text-wrapper");
 
-            _button.Clicked += OnOpenSceneButtonClicked;
+            _clickManipulator = new Clickable(OnOpenSceneButtonClicked);
+            _textWrapper.AddManipulator(_clickManipulator);
+            
             RegisterCallback<DetachFromPanelEvent>(OnDetachFromPanel);
 
             _iconImage.AddManipulator(new Clickable(OnIconClick));
@@ -43,8 +50,10 @@ namespace Sandland.SceneTool.Editor.Views
             _sceneInfo = info;
             _button.text = _sceneInfo.Name;
             _favoritesButton.Init(_sceneInfo);
-            
-            _iconImage.image = info.GetSceneIcon();
+            _typeLabel.text = info.ImportType.ToDescription();
+
+            // TODO: Support dynamic themes
+            _iconImage.image = Icons.GetSceneIcon(true);
 
             ResetInlineStyles();
         }
@@ -73,7 +82,6 @@ namespace Sandland.SceneTool.Editor.Views
         public void Dispose()
         {
             UnregisterCallback<DetachFromPanelEvent>(OnDetachFromPanel);
-            _button.Clicked -= OnOpenSceneButtonClicked;
         }
     }
 }
