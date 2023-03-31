@@ -1,46 +1,30 @@
-.scene-class-generation-property {
-    flex-direction: row;
-    margin-top: 6px;
-}
-
-.scene-class-generation-property TextField {
-    flex-grow: 1;
-    flex-basis: auto;
-}
-
-#save-button {
-    margin-top: 20px;
-}
-
-.scene-class-generation-property Label {
-    flex-shrink: 1;
-    min-width: 120px;
-    font-size: 15px;
-}
-
-#scene-class-location-text Label:disabled {
+.block-title, .block-title * {
+    font-size: var(--title-font-size);
     color: var(--primary-text-color);
 }
 
-.scene-class-generation-property TextInput {
-    font-size: 15px;
+.block-title #unity-checkmark{
+    height: var(--title-font-size);
+    width: var(--title-font-size);
 }
 
-.main-content > Toggle Label {
-    color: var(--secondary-text-color);
+.scene-class-generation-property {
+    flex-direction: row;
+}
+.scene-class-generation-property TextField {
+    flex-grow: 1;
 }
 
-.main-content > Toggle #unity-checkmark {
-    width: 20px;
-    height: 20px;
-}
-
-.block-title {
-    color: var(--secondary-text-color);
-    font-size: 20px;
-    margin-bottom: 15px;
+#scene-class-location-button {
+    align-self: flex-end;
+    min-width: var(--button-min-width);
 }
 
 #theme-selection-group {
     flex-direction: column;
+    margin-top: var(--field-padding);
+}
+
+#scene-class-generation-toggle Label {
+    color: var(--primary-text-color);
 }

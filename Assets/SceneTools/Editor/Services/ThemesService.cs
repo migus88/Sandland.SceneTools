@@ -8,7 +8,7 @@ namespace Sandland.SceneTool.Editor.Services
 {
     internal static class ThemesService
     {
-        public const string DefaultThemeStyleSheetName = "sandland-default";
+        public const string DefaultThemeStyleSheetName = "sandland-new-dark";
         
         private const string SelectedThemePathKey = "sandland-selected-theme-guid";
 

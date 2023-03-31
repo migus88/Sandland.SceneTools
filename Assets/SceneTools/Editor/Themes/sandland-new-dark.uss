@@ -1,0 +1,29 @@
+:root {
+    --primary-background-color: #1d1b29;
+    --secondary-background-color: #2a2e3a;
+    --element-background-color: #181621;
+    --primary-text-color: #f9fafc;
+    --secondary-text-color: #9e9da3;
+    --disabled-text-color: #615c73;
+    --accent-color: #b05894;
+    --selection-color: #48406a;
+    --button-color: #3c3560;
+    --button-hover-color: #483d80;
+    --button-press-color: #372e68;
+
+    --border-radius: 13px;
+    --field-border-radius: 10px;
+    
+    --font-size: 15px;
+    --small-font-size: 12px;
+    --title-font-size: 20px;
+    
+    --content-margin: 12px;
+    
+    --content-padding: 12px;
+    --field-padding: 5px;
+    
+    --button-min-width: 40px;
+    --list-icons-size: 50px;
+    --favorites-size: 30px;
+}

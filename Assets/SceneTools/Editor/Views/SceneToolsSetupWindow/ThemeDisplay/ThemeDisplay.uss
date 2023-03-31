@@ -1,40 +1,9 @@
-.title-color-display {
-    background-color: var(--title-color);
-}
-
-.background-color-display {
-    background-color: var(--background-color);
-}
-
-.border-color-display {
-    background-color: var(--border-color);
-}
-
-.primary-text-color-display {
-    background-color: var(--primary-text-color);
-}
-
-.secondary-text-color-display {
-    background-color: var(--secondary-text-color);
-}
-
-.button-color-display {
-    background-color: var(--button-color);
-}
-
-.accent-color-display {
-    background-color: var(--accent-color);
-}
-
-.focus-color-display {
-    background-color: var(--focus-color);
-}
-
 .colors-display {
     flex-direction: row;
-    border-color: var(--border-color);
+    border-color: black;
     border-width: 1px;
     margin-left: 10px;
+    border-radius: var(--field-border-radius);
 }
 
 .colors-display>VisualElement {
@@ -42,15 +11,54 @@
     width: 40px;
 }
 
-RadioButton>Label {
-    display: none;
-}
-
-ThemeDisplay>VisualElement.unity-base-field__input {
-    flex-grow: 0;
-}
 ThemeDisplay>Label {
     min-width: 200px;
     max-width: 200px;
     display: none;
+}
+
+ThemeDisplay .unity-radio-button__input {
+    flex-grow: 0;
+}
+
+.display-primary-background {
+    background-color: var(--primary-background-color);
+}
+
+.display-secondary-background {
+    background-color: var(--secondary-background-color);
+}
+
+.display-element-background {
+    background-color: var(--element-background-color);
+}
+
+.display-primary-text {
+    background-color: var(--primary-text-color);
+}
+
+.display-secondary-text {
+    background-color: var(--secondary-text-color);
+}
+
+.display-accent {
+    background-color: var(--accent-color);
+}
+
+.display-selection {
+    background-color: var(--selection-color);
+}
+
+.display-button {
+    background-color: var(--button-color);
+}
+
+.first-display-element {
+    border-bottom-left-radius: var(--field-border-radius);
+    border-top-left-radius: var(--field-border-radius);
+}
+
+.last-display-element {
+    border-bottom-right-radius: var(--field-border-radius);
+    border-top-right-radius: var(--field-border-radius);
 }

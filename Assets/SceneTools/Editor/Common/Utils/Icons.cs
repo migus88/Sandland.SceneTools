@@ -7,28 +7,24 @@ namespace Sandland.SceneTool.Editor.Common.Utils
 {
     internal static class Icons
     {
-        public static Texture2D SceneToolIcon => _sceneToolIcon ??=
-            AssetDatabaseUtils.FindAndLoadAsset<Texture2D>("tool_icon l:Sandland-scene-tool-icon"); 
-        public static Texture2D DefaultSceneIcon => _defaultSceneIcon ??=
-            AssetDatabaseUtils.FindAndLoadAsset<Texture2D>("unused_scene_icon l:Sandland-scene-tool-icon"); 
-        public static Texture2D AddressableSceneIcon => _addressableSceneIcon ??=
-            AssetDatabaseUtils.FindAndLoadAsset<Texture2D>("addressable_scene_icon l:Sandland-scene-tool-icon"); 
-        public static Texture2D BuiltInSceneIcon => _builtInSceneIcon ??=
-            AssetDatabaseUtils.FindAndLoadAsset<Texture2D>("built_in_scene_icon l:Sandland-scene-tool-icon"); 
+        private const string IconsRoot = "Sandland/Images/";
         
+        public static Texture2D BrightSceneToolIcon => _brightSceneToolIcon ??=
+            Resources.Load<Texture2D>($"{IconsRoot}tool_icon_bright"); 
+        public static Texture2D DarkSceneToolIcon => _darkSceneToolIcon ??=
+            Resources.Load<Texture2D>($"{IconsRoot}tool_icon_dark");
+        public static Texture2D BrightSceneIcon => _brightSceneIcon ??=
+            Resources.Load<Texture2D>($"{IconsRoot}scene_icon_bright"); 
+        public static Texture2D DarkSceneIcon => _darkSceneIcon ??=
+            Resources.Load<Texture2D>($"{IconsRoot}scene_icon_dark"); 
         
-        private static Texture2D _sceneToolIcon;
-        private static Texture2D _defaultSceneIcon;
-        private static Texture2D _addressableSceneIcon;
-        private static Texture2D _builtInSceneIcon;
+        private static Texture2D _brightSceneToolIcon;
+        private static Texture2D _darkSceneToolIcon;
+        private static Texture2D _brightSceneIcon;
+        private static Texture2D _darkSceneIcon;
 
-        public static Texture2D GetSceneIcon(this SceneInfo info) => info.ImportType switch
-        {
-            SceneImportType.None => DefaultSceneIcon,
-            SceneImportType.BuildSettings => BuiltInSceneIcon,
-            SceneImportType.Addressables => AddressableSceneIcon,
-            _ => throw new ArgumentOutOfRangeException()
-        };
+        public static Texture2D GetSceneIcon(bool isDarkTheme) => isDarkTheme ? BrightSceneIcon : DarkSceneIcon;
+        public static Texture2D GetSceneToolIcon(bool isDarkTheme) => isDarkTheme ? BrightSceneToolIcon : DarkSceneToolIcon;
 
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using UnityEngine;
 
@@ -37,6 +38,21 @@ namespace Sandland.SceneTool.Editor.Common.Utils
                 .Select(w => upperCaseInside.Replace(w, m => m.Value.ToLower()));
 
             return string.Concat(pascalCase);
+        }
+        
+        public static string ToDescription(this Enum genericEnum)
+        {
+            var genericEnumType = genericEnum.GetType();
+            var memberInfo = genericEnumType.GetMember(genericEnum.ToString());
+            
+            if (memberInfo.Length <= 0)
+            {
+                return genericEnum.ToString();
+            }
+            
+            var attributes = memberInfo[0].GetCustomAttributes(typeof(System.ComponentModel.DescriptionAttribute), false);
+            
+            return attributes.Any() ? ((System.ComponentModel.DescriptionAttribute)attributes.ElementAt(0)).Description : genericEnum.ToString();
         }
     }
 }

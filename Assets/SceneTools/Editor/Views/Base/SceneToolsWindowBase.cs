@@ -23,7 +23,8 @@ namespace Sandland.SceneTool.Editor.Views
         protected void InitWindow(Texture2D overrideIcon = null)
         {
             minSize = new Vector2(MinWidth, MinHeight);
-            titleContent = new GUIContent(WindowName, overrideIcon ? overrideIcon : Icons.SceneToolIcon);
+            // TODO: support dynamic theme
+            titleContent = new GUIContent(WindowName, overrideIcon ? overrideIcon : Icons.GetSceneToolIcon(true));
 
             if (docked)
             {
