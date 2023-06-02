@@ -84,6 +84,7 @@ namespace Sandland.SceneTool.Editor.Views
                 .OrderByFavorites()
                 .ThenByDescending(s => s.ImportType == SceneImportType.BuildSettings)
                 .ThenByDescending(s => s.ImportType == SceneImportType.Addressables)
+                .ThenByDescending(s => s.ImportType == SceneImportType.AssetBundle)
                 .ToArray();
         }
 
