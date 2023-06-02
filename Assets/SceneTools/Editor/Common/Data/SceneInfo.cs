@@ -23,6 +23,14 @@ namespace Sandland.SceneTool.Editor.Common.Data
                 };
             }
             
+            public static SceneInfo AssetBundle(string name, string path, string guid, List<string> labels = null)
+            {
+                return new SceneInfo(name, path, guid, labels)
+                {
+                    ImportType = SceneImportType.AssetBundle
+                };
+            }
+            
             public static SceneInfo Default(string name, string path, string guid, List<string> labels = null)
             {
                 return new SceneInfo(name, path, guid, labels)

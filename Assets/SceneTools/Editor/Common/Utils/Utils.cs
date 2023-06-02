@@ -42,6 +42,14 @@ namespace Sandland.SceneTool.Editor.Common.Utils
             return false;
 #endif
         }
+        
+        public static bool IsAssetInBundle(string assetPath)
+        {
+            return AssetDatabase
+                .GetAllAssetBundleNames()
+                .Select(AssetDatabase.GetAssetPathsFromAssetBundle)
+                .Any(assetPaths => assetPaths.Contains(assetPath));
+        }
 
         public static bool IsSceneInBuildSettings(string guid, out int buildIndex)
         {

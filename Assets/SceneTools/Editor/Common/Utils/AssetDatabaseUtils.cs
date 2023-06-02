@@ -88,6 +88,10 @@ namespace Sandland.SceneTool.Editor.Common.Utils
                 {
                     result[i] = SceneInfo.Create.Addressable(address, asset.Name, asset.Path, asset.Guid, asset.Labels);
                 }
+                else if (Utils.IsAssetInBundle(asset.Path))
+                {
+                    result[i] = SceneInfo.Create.AssetBundle(asset.Name, asset.Path, asset.Guid, asset.Labels);
+                }
                 else if (Utils.IsSceneInBuildSettings(asset.Guid, out var buildIndex))
                 {
                     result[i] = SceneInfo.Create.BuiltIn(asset.Name, buildIndex, asset.Path, asset.Guid, asset.Labels);

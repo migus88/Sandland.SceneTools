@@ -9,7 +9,8 @@ namespace Sandland.SceneTool.Editor.Common.Data
         [Description("In Build Settings")]
         BuildSettings = 1,
         [Description("In Addressable Group")]
-        Addressables = 2
-        // TODO: Add Asset Bundles support
+        Addressables = 2,
+        [Description("In AssetBundle")]
+        AssetBundle = 3
     }
 }
