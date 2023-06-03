@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Sandland.SceneTool.Editor.Common.Data;
@@ -119,23 +118,18 @@ namespace Sandland.SceneTool.Editor.Common.Utils
                 return Array.Empty<AssetFileInfo>();
             }
 
-            var result = new List<AssetFileInfo>();
+            var result = new AssetFileInfo[guids.Length];
 
-            foreach (var guid in guids)
+            for (var i = 0; i < guids.Length; i++)
             {
+                var guid = guids[i];
                 var path = AssetDatabase.GUIDToAssetPath(guid);
-
-                if (path.StartsWith("Packages/"))
-                {
-                    continue;
-                }
-                
                 var assetName = Path.GetFileNameWithoutExtension(path);
                 var labels = AssetDatabase.GetLabels(new GUID(guid)).ToList();
-                result.Add(new AssetFileInfo(assetName, path, guid, string.Empty, labels));
+                result[i] = new AssetFileInfo(assetName, path, guid, string.Empty, labels);
             }
 
-            return result.ToArray();
+            return result;
         }
 
         public static void SetLabels<T>(this AssetFileInfo info) where T : Object
