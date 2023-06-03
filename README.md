@@ -27,6 +27,38 @@ Enhance your Unity scene management workflow with this powerful set of editor to
 
 ### Installation
 
+#### OpenUPM
+This is the preferred method of installation. OpenUPM handles updates a lot better than other methods described here.
+
+**With CLI:**
+
+1. Install [openupm-cli](https://openupm.com/docs/getting-started.html#installing-openupm-cli).
+2. Navigate to your project folder in the terminal/command prompt.
+3. Run the following command: `openupm add com.sandland.scene-tools`
+
+**Without CLI:**
+1. Open the Packages/manifest.json file in your Unity project directory.
+2. Add the following lines:
+```json
+{
+  "scopedRegistries": [
+    {
+      "name": "package.openupm.com",
+      "url": "https://package.openupm.com",
+      "scopes": [
+        "com.sandland.scene-tools"
+      ]
+    }
+  ],
+  "dependencies": {
+    "com.sandland.scene-tools": "0.11.0",
+    ...
+  }
+}
+```
+After saving the manifest.json file, Unity will automatically download and install the SceneTools package.
+
+
 #### Git URL
 
 1. Open Unity and navigate to `Window > Package Manager`.
