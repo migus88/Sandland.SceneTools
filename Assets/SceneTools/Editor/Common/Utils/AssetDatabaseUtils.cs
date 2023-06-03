@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Sandland.SceneTool.Editor.Common.Data;
@@ -78,33 +79,42 @@ namespace Sandland.SceneTool.Editor.Common.Utils
         {
             var assets = FindAssets<Scene>(name);
 
-            var result = new SceneInfo[assets.Length];
+            var result = new List<SceneInfo>(assets.Length);
             var sceneBuildIndexes = Utils.GetSceneBuildIndexes();
             var assetsInBundles = Utils.GetAssetsInBundles();
 
-            for (var i = 0; i < assets.Length; i++)
+            const string packagesPrefix = "Packages/";
+
+            foreach (var asset in assets)
             {
-                var asset = assets[i];
+                if (asset.Path.StartsWith(packagesPrefix))
+                {
+                    continue;
+                }
+                
+                SceneInfo info;
                 
                 if (Utils.IsAssetAddressable(asset.Guid, out var address))
                 {
-                    result[i] = SceneInfo.Create.Addressable(address, asset.Name, asset.Path, asset.Guid, asset.Labels);
+                    info = SceneInfo.Create.Addressable(address, asset.Name, asset.Path, asset.Guid, asset.Labels);
                 }
                 else if (Utils.IsAssetInBundle(assetsInBundles, asset.Path, out var bundleName))
                 {
-                    result[i] = SceneInfo.Create.AssetBundle(asset.Name, asset.Path, asset.Guid, bundleName, asset.Labels);
+                    info = SceneInfo.Create.AssetBundle(asset.Name, asset.Path, asset.Guid, bundleName, asset.Labels);
                 }
                 else if (sceneBuildIndexes.ContainsSceneGuid(asset.Guid, out var buildIndex))
                 {
-                    result[i] = SceneInfo.Create.BuiltIn(asset.Name, buildIndex, asset.Path, asset.Guid, asset.Labels);
+                    info = SceneInfo.Create.BuiltIn(asset.Name, buildIndex, asset.Path, asset.Guid, asset.Labels);
                 }
                 else
                 {
-                    result[i] = SceneInfo.Create.Default(asset.Name, asset.Path, asset.Guid, asset.Labels);
+                    info = SceneInfo.Create.Default(asset.Name, asset.Path, asset.Guid, asset.Labels);
                 }
+                
+                result.Add(info);
             }
 
-            return result;
+            return result.ToArray();
         }
 
         public static AssetFileInfo[] FindAssets<T>(string name = null)
