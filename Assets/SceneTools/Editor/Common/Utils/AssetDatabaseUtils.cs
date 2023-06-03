@@ -79,6 +79,8 @@ namespace Sandland.SceneTool.Editor.Common.Utils
             var assets = FindAssets<Scene>(name);
 
             var result = new SceneInfo[assets.Length];
+            var sceneBuildIndexes = Utils.GetSceneBuildIndexes();
+            var assetsInBundles = Utils.GetAssetsInBundles();
 
             for (var i = 0; i < assets.Length; i++)
             {
@@ -88,11 +90,11 @@ namespace Sandland.SceneTool.Editor.Common.Utils
                 {
                     result[i] = SceneInfo.Create.Addressable(address, asset.Name, asset.Path, asset.Guid, asset.Labels);
                 }
-                else if (Utils.IsAssetInBundle(asset.Path))
+                else if (Utils.IsAssetInBundle(assetsInBundles, asset.Path, out var bundleName))
                 {
-                    result[i] = SceneInfo.Create.AssetBundle(asset.Name, asset.Path, asset.Guid, asset.Labels);
+                    result[i] = SceneInfo.Create.AssetBundle(asset.Name, asset.Path, asset.Guid, bundleName, asset.Labels);
                 }
-                else if (Utils.IsSceneInBuildSettings(asset.Guid, out var buildIndex))
+                else if (sceneBuildIndexes.ContainsSceneGuid(asset.Guid, out var buildIndex))
                 {
                     result[i] = SceneInfo.Create.BuiltIn(asset.Name, buildIndex, asset.Path, asset.Guid, asset.Labels);
                 }
@@ -124,7 +126,7 @@ namespace Sandland.SceneTool.Editor.Common.Utils
                 var path = AssetDatabase.GUIDToAssetPath(guid);
                 var assetName = Path.GetFileNameWithoutExtension(path);
                 var labels = AssetDatabase.GetLabels(new GUID(guid)).ToList();
-                result[i] = new AssetFileInfo(assetName, path, guid, labels);
+                result[i] = new AssetFileInfo(assetName, path, guid, string.Empty, labels);
             }
 
             return result;

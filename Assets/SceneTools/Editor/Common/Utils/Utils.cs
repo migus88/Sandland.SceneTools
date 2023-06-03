@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
@@ -15,11 +16,11 @@ namespace Sandland.SceneTool.Editor.Common.Utils
         public static bool IsAddressablesInstalled =>
             PackageInfo.FindForAssetPath("Packages/com.unity.addressables/AddressableAssets")?.name ==
             "com.unity.addressables";
-        
+
         public static bool IsAssetAddressable(string guid, out string address)
         {
             address = string.Empty;
-            
+
 #if SANDLAND_ADDRESSABLES
             var settings = AddressableAssetSettingsDefaultObject.Settings;
 
@@ -42,34 +43,44 @@ namespace Sandland.SceneTool.Editor.Common.Utils
             return false;
 #endif
         }
-        
-        public static bool IsAssetInBundle(string assetPath)
-        {
-            return AssetDatabase
+
+        public static bool IsAssetInBundle(Dictionary<string, string> assetsInBundles, string assetPath, out string bundleName) 
+            => assetsInBundles.TryGetValue(assetPath, out bundleName);
+
+        public static Dictionary<string, string> GetAssetsInBundles() =>
+            AssetDatabase
                 .GetAllAssetBundleNames()
-                .Select(AssetDatabase.GetAssetPathsFromAssetBundle)
-                .Any(assetPaths => assetPaths.Contains(assetPath));
-        }
+                .SelectMany(AssetDatabase.GetAssetPathsFromAssetBundle, (bundleName, path) => new { bundleName, path })
+                .ToDictionary(x => x.path, x => x.bundleName);
 
-        public static bool IsSceneInBuildSettings(string guid, out int buildIndex)
+        public static Dictionary<GUID, int> GetSceneBuildIndexes()
         {
-            buildIndex = -1;
-            var guidObj = new GUID(guid);
+            var collection = new Dictionary<GUID, int>();
+            var scenesAmount = EditorBuildSettings.scenes.Length;
 
-            for (var i = 0; i < EditorBuildSettings.scenes.Length; i++)
+            for (var i = 0; i < scenesAmount; i++)
             {
                 var scene = EditorBuildSettings.scenes[i];
-
-                if (scene.guid != guidObj)
-                {
-                    continue;
-                }
-                
-                buildIndex = i;
-                return true;
+                collection.Add(scene.guid, i);
             }
 
-            return false;
+            return collection;
+        }
+
+        public static bool ContainsSceneGuid(this Dictionary<GUID, int> sceneBuildIndexes, string sceneGuid,
+            out int buildIndex)
+        {
+            buildIndex = -1;
+            var sceneGuidObj = new GUID(sceneGuid);
+
+            var hasScene = sceneBuildIndexes.TryGetValue(sceneGuidObj, out var sceneIndex);
+
+            if (hasScene)
+            {
+                buildIndex = sceneIndex;
+            }
+
+            return hasScene;
         }
     }
 }
