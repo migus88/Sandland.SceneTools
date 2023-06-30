@@ -54,7 +54,7 @@ This is the preferred method of installation. OpenUPM handles updates a lot bett
     }
   ],
   "dependencies": {
-    "com.sandland.scene-tools": "0.11.0",
+    "com.sandland.scene-tools": "0.11.1",
     // ...
   }
 }
@@ -68,7 +68,7 @@ After saving the `manifest.json` file, Unity will automatically download and ins
 2. Click the `+` button and select `Add package from git URL...`.
 3. Enter the following URL: `https://github.com/migus88/Sandland.SceneTools.git?path=Assets/SceneTools`.
 
-To use a specific version, append a hashtag followed by the version number in a `v0.0.0` format. Example: `https://github.com/migus88/Sandland.SceneTools.git?path=Assets/SceneTools#v0.5.0`.
+To use a specific version, append a hashtag followed by the version number in a `v0.0.0` format. Example: `https://github.com/migus88/Sandland.SceneTools.git?path=Assets/SceneTools#v0.11.1`.
 
 #### Unity Package
 
