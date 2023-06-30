@@ -61,14 +61,17 @@ namespace Sandland.SceneTool.Editor.Services
 
             public static string FullPath => GetClassLocation();
 
-            public static void CreateFile(IEnumerable<SceneInfo> scenes)
+            public static void CreateFile(List<SceneInfo> scenes)
             {
-                var builtInIndexes = scenes.Select(s =>
-                    $"\t\t\tpublic const int {s.Name.ToPascalCase()} = {s.BuildIndex.ToString()};");
-                var builtInNames = scenes.Select(s =>
-                    $"\t\t\tpublic const string {s.Name.ToPascalCase()} = \"{s.Name}\";");
-                var addresses = scenes.Where(s => !string.IsNullOrWhiteSpace(s.Address))
-                    .Select(s => $"\t\t\tpublic const string {s.Address.ToPascalCase()} = \"{s.Address}\";");
+                var builtInScenes = scenes.Where(s => string.IsNullOrEmpty(s.Address));
+                var addressablesScene = scenes.Where(s => !string.IsNullOrWhiteSpace(s.Address));
+                
+                var builtInIndexes = builtInScenes
+                    .Select(s => $"\t\t\tpublic const int {s.Name.ToPascalCase()} = {s.BuildIndex.ToString()};");
+                var builtInNames = builtInScenes
+                    .Select(s => $"\t\t\tpublic const string {s.Name.ToPascalCase()} = \"{s.Name}\";");
+                var addresses = addressablesScene
+                    .Select(s => $"\t\t\tpublic const string {GetAddressablesConstName(s.Address)} = \"{s.Address}\";");
 
                 var content = $"namespace {Namespace}\n" +
                               $"{{\n" +
@@ -101,6 +104,9 @@ namespace Sandland.SceneTool.Editor.Services
 
                 AssetDatabaseUtils.SetLabel<MonoScript>(finalPath, Label);
             }
+
+            private static string GetAddressablesConstName(string address) =>
+                Path.GetFileNameWithoutExtension(address).ToPascalCase();
 
             private static string GetDirectory()
             {
