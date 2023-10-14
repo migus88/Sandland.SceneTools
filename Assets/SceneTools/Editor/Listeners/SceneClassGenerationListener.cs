@@ -19,7 +19,7 @@ namespace Sandland.SceneTool.Editor.Listeners
         [InitializeOnLoadMethod]
         private static void Initialize()
         {
-            EditorBuildSettings.sceneListChanged += GenerateScenesClass;
+            EditorBuildSettings.sceneListChanged += GenerateScenesFiles;
 
 #if SANDLAND_ADDRESSABLES
             AddressableAssetSettings.OnModificationGlobal += OnAddressablesModification;
@@ -38,7 +38,7 @@ namespace Sandland.SceneTool.Editor.Listeners
                     var shouldGenerate = IsShouldGenerateClass(args, entry);
                     if (shouldGenerate)
                     {
-                        GenerateScenesClass();
+                        GenerateScenesFiles();
                     }
 
                     break;
@@ -50,7 +50,7 @@ namespace Sandland.SceneTool.Editor.Listeners
                         var shouldGenerate = IsShouldGenerateClass(args, e);
                         if (shouldGenerate)
                         {
-                            GenerateScenesClass();
+                            GenerateScenesFiles();
                         }
                     }
 
@@ -76,10 +76,10 @@ namespace Sandland.SceneTool.Editor.Listeners
         }
 #endif
 
-        [MenuItem(MenuItems.Tools.Actions + "Generate Scenes Class")]
-        private static void GenerateScenesClass()
+        [MenuItem(MenuItems.Tools.Actions + "Generate Scenes Files")]
+        public static void GenerateScenesFiles()
         {
-            if (!SceneToolsService.ClassGeneration.IsAutoGenerateEnabled)
+            if (!SceneToolsService.SceneFilesGeneration.IsAutoGenerateEnabled)
             {
                 return;
             }
@@ -104,7 +104,8 @@ namespace Sandland.SceneTool.Editor.Listeners
             scenes.AddRange(addressableScenes);
 #endif
 
-            SceneToolsService.ClassGeneration.CreateFile(scenes);
+            SceneToolsService.SceneFilesGeneration.CreateClassFile(scenes);
+            SceneToolsService.SceneFilesGeneration.CreateScriptableObjectFile(scenes);
         }
     }
 }

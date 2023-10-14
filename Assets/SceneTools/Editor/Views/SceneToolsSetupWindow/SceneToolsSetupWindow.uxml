@@ -10,7 +10,7 @@
             <engine:Label name="content-title" text="Scene Tools Setup"/>
         </engine:VisualElement>
         <engine:VisualElement class="content-block main-content">
-            <engine:Toggle name="scene-class-generation-toggle" class="block-title" text="Scenes Class Generation"/>
+            <engine:Toggle name="scene-class-generation-toggle" class="block-title" text="Scenes Files Generation"/>
             <engine:VisualElement name="scene-class-generation-block">
                 <engine:VisualElement class="scene-class-generation-property">
                     <engine:Toggle name="scene-class-changes-detection-toggle"
@@ -20,16 +20,31 @@
                 <engine:VisualElement class="scene-class-generation-property">
                     <engine:Toggle name="scene-class-addressables-support-toggle" text="Addressable Scenes Support"/>
                 </engine:VisualElement>
-                <engine:VisualElement class="scene-class-generation-property">
-                    <engine:TextField label="Namespace:" name="scene-namespace-text" text="Sandland"/>
+                <engine:Label class="block-title secondary" text="Class Generation"/>
+                <engine:VisualElement class="indented">
+                    <engine:VisualElement class="scene-class-generation-property">
+                        <engine:TextField label="Namespace:" name="scene-namespace-text" text="Sandland"/>
+                    </engine:VisualElement>
+                    <engine:VisualElement class="scene-class-generation-property">
+                        <engine:TextField label="Class Name:" name="scene-class-name-text" text="SceneList"/>
+                    </engine:VisualElement>
+                    <engine:VisualElement class="scene-class-generation-property">
+                        <engine:TextField label="Class Location:" name="scene-class-location-text"
+                                          text="Assets/Sandland/Runtime"/>
+                        <engine:Button name="scene-class-location-button" text="..."/>
+                    </engine:VisualElement>
                 </engine:VisualElement>
-                <engine:VisualElement class="scene-class-generation-property">
-                    <engine:TextField label="Class Name:" name="scene-class-name-text" text="SceneList"/>
-                </engine:VisualElement>
-                <engine:VisualElement class="scene-class-generation-property">
-                    <engine:TextField label="Class Location:" name="scene-class-location-text"
-                                      text="Assets/Sandland/Runtime"/>
-                    <engine:Button name="scene-class-location-button" text="..."/>
+                <engine:Label class="block-title secondary" text="Scriptable Object Generation"/>
+                <engine:VisualElement class="indented">
+                    <engine:VisualElement class="scene-class-generation-property">
+                        <engine:TextField label="Scriptable Object Name:" name="scene-so-name-text"
+                                          text="ProjectScenes"/>
+                    </engine:VisualElement>
+                    <engine:VisualElement class="scene-class-generation-property">
+                        <engine:TextField label="Scriptable Object Location:" name="scene-so-location-text"
+                                          text="Assets/Sandland/Settings"/>
+                        <engine:Button name="scene-so-location-button" text="..."/>
+                    </engine:VisualElement>
                 </engine:VisualElement>
             </engine:VisualElement>
             <engine:VisualElement class="horizontal-spacer"/>

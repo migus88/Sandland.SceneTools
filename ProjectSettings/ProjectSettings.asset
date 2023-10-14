@@ -824,7 +824,7 @@ PlayerSettings:
   webGLMemoryGeometricGrowthCap: 96
   webGLPowerPreference: 2
   scriptingDefineSymbols:
-    Standalone: SANDLAND_SCENE_CLASS_GEN;SANDLAND_ADDRESSABLES
+    Standalone: SANDLAND_ADDRESSABLES;SANDLAND_SCENE_CLASS_GEN
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend: {}

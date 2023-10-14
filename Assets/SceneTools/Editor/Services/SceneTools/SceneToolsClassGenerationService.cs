@@ -3,25 +3,31 @@ using System.IO;
 using System.Linq;
 using Sandland.SceneTool.Editor.Common.Data;
 using Sandland.SceneTool.Editor.Common.Utils;
+using SceneTools.Runtime.Settings;
 using UnityEditor;
+using UnityEngine;
 
 namespace Sandland.SceneTool.Editor.Services
 {
     internal static partial class SceneToolsService
     {
-        public static class ClassGeneration
+        public static class SceneFilesGeneration
         {
             private const string MainToggleKey = "sandland-scene-class-generation-toggle";
-            private const string LocationKey = "sandland-scene-class-generation-location";
+            private const string ClassLocationKey = "sandland-scene-class-generation-location";
+            private const string ScriptableObjectLocationKey = "sandland-scene-class-generation-location";
             private const string ClassNameKey = "sandland-scene-class-generation-class-name";
+            private const string ScriptableObjectNameKey = "sandland-scene-so-generation-class-name";
             private const string NamespaceKey = "sandland-scene-class-generation-namespace";
             private const string AddressablesSupportKey = "sandland-scene-class-generation-addressables-support";
             private const string AutogenerateOnChangeToggleKey = "sandland-scene-class-generation-autogenerate-toggle";
             
             private const string DefaultLocation = "Assets/Sandland/Runtime/";
             private const string DefaultClassName = "SceneList";
+            private const string DefaultScriptableObjectName = nameof(ProjectScenes);
             private const string DefaultNamespace = "Sandland";
-            private const string Label = "sandland-scene-class";
+            private const string ClassLabel = "sandland-scene-class";
+            private const string ScriptableObjectLabel = "sandland-scene-so";
 
             public static bool IsEnabled
             {
@@ -41,10 +47,16 @@ namespace Sandland.SceneTool.Editor.Services
                 set => EditorPrefs.SetBool(AddressablesSupportKey, value);
             }
 
-            public static string Directory
+            public static string ClassDirectory
             {
-                get => GetDirectory();
-                set => EditorPrefs.SetString(LocationKey, value);
+                get => GetDirectory(ClassLabel, ClassLocationKey);
+                set => EditorPrefs.SetString(ClassLocationKey, value);
+            }
+
+            public static string ScriptableObjectDirectory
+            {
+                get => GetDirectory(ScriptableObjectLabel, ScriptableObjectLocationKey);
+                set => EditorPrefs.SetString(ScriptableObjectLocationKey, value);
             }
 
             public static string ClassName
@@ -53,15 +65,45 @@ namespace Sandland.SceneTool.Editor.Services
                 set => EditorPrefs.SetString(ClassNameKey, value);
             }
 
+            public static string ScriptableObjectName
+            {
+                get => EditorPrefs.GetString(ScriptableObjectNameKey, DefaultScriptableObjectName);
+                set => EditorPrefs.SetString(ScriptableObjectNameKey, value);
+            }
+
             public static string Namespace
             {
                 get => EditorPrefs.GetString(NamespaceKey, DefaultNamespace);
                 set => EditorPrefs.SetString(NamespaceKey, value);
             }
 
-            public static string FullPath => GetClassLocation();
+            public static string ClassFullPath => GetLocation(ClassLabel);
+            public static string ScriptableObjectFullPath => GetLocation(ScriptableObjectLabel);
+            
+            public static void CreateScriptableObjectFile(List<SceneInfo> scenes)
+            {
+                var builtInScenes = scenes.Where(s => string.IsNullOrEmpty(s.Address));
+                var addressablesScenes = scenes.Where(s => !string.IsNullOrWhiteSpace(s.Address));
+                
+                var projectScenes = ScriptableObject.CreateInstance<ProjectScenes>();
 
-            public static void CreateFile(List<SceneInfo> scenes)
+                projectScenes.Names = builtInScenes.Select(s => s.Name).ToArray();
+                projectScenes.Indexes = builtInScenes.Select(s => s.BuildIndex).ToArray();
+                projectScenes.Addressables = addressablesScenes.Select(s => s.Address).ToArray();
+
+                var finalPath = ScriptableObjectFullPath ?? Path.Combine(ScriptableObjectDirectory, $"{ScriptableObjectName}.asset");
+
+                if (!AssetDatabase.IsValidFolder(ScriptableObjectDirectory))
+                {
+                    Directory.CreateDirectory(ScriptableObjectDirectory);
+                }
+                
+                AssetDatabase.CreateAsset(projectScenes, finalPath);
+                AssetDatabase.SaveAssets();
+                AssetDatabase.Refresh();
+            }
+
+            public static void CreateClassFile(List<SceneInfo> scenes)
             {
                 var builtInScenes = scenes.Where(s => string.IsNullOrEmpty(s.Address));
                 var addressablesScene = scenes.Where(s => !string.IsNullOrWhiteSpace(s.Address));
@@ -92,34 +134,34 @@ namespace Sandland.SceneTool.Editor.Services
                               $"\t}}\n" +
                               $"}}\n";
 
-                var finalPath = FullPath ?? Path.Combine(Directory, $"{ClassName}.cs");
+                var finalPath = ClassFullPath ?? Path.Combine(ClassDirectory, $"{ClassName}.cs");
 
-                if (!AssetDatabase.IsValidFolder(Directory))
+                if (!AssetDatabase.IsValidFolder(ClassDirectory))
                 {
-                    System.IO.Directory.CreateDirectory(Directory);
+                    System.IO.Directory.CreateDirectory(ClassDirectory);
                 }
 
                 File.WriteAllText(finalPath, content);
                 AssetDatabase.Refresh();
 
-                AssetDatabaseUtils.SetLabel<MonoScript>(finalPath, Label);
+                AssetDatabaseUtils.SetLabel<MonoScript>(finalPath, ClassLabel);
             }
 
             private static string GetAddressablesConstName(string address) =>
                 Path.GetFileNameWithoutExtension(address).ToPascalCase();
 
-            private static string GetDirectory()
+            private static string GetDirectory(string label, string locationKey)
             {
-                var classLocation = GetClassLocation();
+                var classLocation = GetLocation(label);
 
                 return classLocation == null
-                    ? EditorPrefs.GetString(LocationKey, DefaultLocation)
+                    ? EditorPrefs.GetString(locationKey, DefaultLocation)
                     : Path.GetDirectoryName(classLocation);
             }
 
-            private static string GetClassLocation()
+            private static string GetLocation(string label)
             {
-                var info = AssetDatabase.FindAssets($"l:{Label}");
+                var info = AssetDatabase.FindAssets($"l:{label}");
                 return info.Length == 0 ? null : AssetDatabase.GUIDToAssetPath(info[0]);
             }
         }

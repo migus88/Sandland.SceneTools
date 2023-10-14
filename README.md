@@ -86,11 +86,13 @@ To use a specific version, append a hashtag followed by the version number in a 
 4. Use the search bar to filter scenes by name.
 5. Toggle the star icon next to a scene to add or remove it from your favorites. Favorited scenes will appear at the top of the list.
 
-#### Scene Class Generation Tool
+#### Scene Files Generation Tool
+Additionally, Scene Tool can generate a class and a scriptable object containing the names, indexes and the addresses (if using Addressables) of the scenes in the project
 
 1. Navigate to `Tools > Sandland Games > Setup Scene Tools` to enable and configure the tool.
 2. Select the namespace, class name, and location for the generated class.
-3. The class will be re-generated automatically whenever the "Scenes In Build" list changes.
+3. Select the Scriptable Object name and path
+4. The class will be re-generated automatically whenever the "Scenes In Build" list changes.
     - If Addressables support is enabled in the "Setup Scene Tools" window, the class will also be regenerated every time there is a scene-related change in the Addressables.
 
 To enable or disable Addressables support, open the "Setup Scene Tools" window, and toggle the corresponding option.
@@ -147,6 +149,7 @@ To create your own theme, follow these steps:
     --font-size: 15px;
     --small-font-size: 12px;
     --title-font-size: 20px;
+    --title-secondary-font-size: 17px;
 
     --content-margin: 12px;
 

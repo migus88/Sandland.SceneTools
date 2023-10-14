@@ -1,5 +1,6 @@
 using System.IO;
 using Sandland.SceneTool.Editor.Common.Utils;
+using Sandland.SceneTool.Editor.Listeners;
 using Sandland.SceneTool.Editor.Services;
 using UnityEditor;
 using UnityEngine.UIElements;
@@ -16,10 +17,13 @@ namespace Sandland.SceneTool.Editor.Views.Handlers
         private readonly Toggle _autogenerateOnChangeToggle;
         private readonly Toggle _addressableScenesSupportToggle;
         private readonly VisualElement _section;
-        private readonly TextField _locationText;
+        private readonly TextField _classLocationText;
+        private readonly TextField _scriptableObjectLocationText;
         private readonly TextField _namespaceText;
         private readonly TextField _classNameText;
-        private readonly Button _locationButton;
+        private readonly TextField _scriptableObjectNameText;
+        private readonly Button _classLocationButton;
+        private readonly Button _scriptableObjectLocationButton;
 
         public SceneClassGenerationUiHandler(VisualElement root)
         {
@@ -27,22 +31,28 @@ namespace Sandland.SceneTool.Editor.Views.Handlers
             _autogenerateOnChangeToggle = root.Q<Toggle>("scene-class-changes-detection-toggle");
             _addressableScenesSupportToggle = root.Q<Toggle>("scene-class-addressables-support-toggle");
             _section = root.Q<VisualElement>("scene-class-generation-block");
-            _locationText = root.Q<TextField>("scene-class-location-text");
+            _classLocationText = root.Q<TextField>("scene-class-location-text");
+            _scriptableObjectLocationText = root.Q<TextField>("scene-so-location-text");
             _namespaceText = root.Q<TextField>("scene-namespace-text");
             _classNameText = root.Q<TextField>("scene-class-name-text");
-            _locationButton = root.Q<Button>("scene-class-location-button");
+            _scriptableObjectNameText = root.Q<TextField>("scene-so-name-text");
+            _classLocationButton = root.Q<Button>("scene-class-location-button");
+            _scriptableObjectLocationButton = root.Q<Button>("scene-so-location-button");
 
             Init();
         }
 
         private void Init()
         {
-            _locationText.SetEnabled(false);
-            _mainToggle.SetValueWithoutNotify(SceneToolsService.ClassGeneration.IsEnabled);
-            _autogenerateOnChangeToggle.SetValueWithoutNotify(SceneToolsService.ClassGeneration.IsAutoGenerateEnabled);
-            _locationText.SetValueWithoutNotify(SceneToolsService.ClassGeneration.Directory);
-            _namespaceText.SetValueWithoutNotify(SceneToolsService.ClassGeneration.Namespace);
-            _classNameText.SetValueWithoutNotify(SceneToolsService.ClassGeneration.ClassName);
+            _classLocationText.SetEnabled(false);
+            _scriptableObjectLocationText.SetEnabled(false);
+            _mainToggle.SetValueWithoutNotify(SceneToolsService.SceneFilesGeneration.IsEnabled);
+            _autogenerateOnChangeToggle.SetValueWithoutNotify(SceneToolsService.SceneFilesGeneration.IsAutoGenerateEnabled);
+            _classLocationText.SetValueWithoutNotify(SceneToolsService.SceneFilesGeneration.ClassDirectory);
+            _scriptableObjectLocationText.SetValueWithoutNotify(SceneToolsService.SceneFilesGeneration.ScriptableObjectDirectory);
+            _namespaceText.SetValueWithoutNotify(SceneToolsService.SceneFilesGeneration.Namespace);
+            _classNameText.SetValueWithoutNotify(SceneToolsService.SceneFilesGeneration.ClassName);
+            _scriptableObjectNameText.SetValueWithoutNotify(SceneToolsService.SceneFilesGeneration.ScriptableObjectName);
 
             if (!Utils.IsAddressablesInstalled)
             {
@@ -51,7 +61,7 @@ namespace Sandland.SceneTool.Editor.Views.Handlers
             }
             else
             {
-                _addressableScenesSupportToggle.SetValueWithoutNotify(SceneToolsService.ClassGeneration.IsAddressablesSupportEnabled);
+                _addressableScenesSupportToggle.SetValueWithoutNotify(SceneToolsService.SceneFilesGeneration.IsAddressablesSupportEnabled);
             }
             
             SetSectionVisibility(_mainToggle.value);
@@ -59,21 +69,23 @@ namespace Sandland.SceneTool.Editor.Views.Handlers
 
         public void SubscribeToEvents()
         {
-            _locationButton.RegisterCallback<ClickEvent>(OnLocationClicked);
+            _classLocationButton.RegisterCallback<ClickEvent>(OnClassLocationClicked);
+            _scriptableObjectLocationButton.RegisterCallback<ClickEvent>(OnScriptableObjectLocationClicked);
             _mainToggle.RegisterValueChangedCallback(OnMainToggleChanged);
         }
 
         public void UnsubscribeFromEvents()
         {
-            _locationButton.UnregisterCallback<ClickEvent>(OnLocationClicked);
+            _classLocationButton.UnregisterCallback<ClickEvent>(OnClassLocationClicked);
+            _scriptableObjectLocationButton.UnregisterCallback<ClickEvent>(OnScriptableObjectLocationClicked);
             _mainToggle.UnregisterValueChangedCallback(OnMainToggleChanged);
         }
 
         public void Apply()
         {
-            SceneToolsService.ClassGeneration.IsEnabled = _mainToggle.value;
+            SceneToolsService.SceneFilesGeneration.IsEnabled = _mainToggle.value;
 
-            if (!SceneToolsService.ClassGeneration.IsEnabled)
+            if (!SceneToolsService.SceneFilesGeneration.IsEnabled)
             {
                 DefineUtils.RemoveDefine(ScriptDefine);
                 return;
@@ -81,8 +93,8 @@ namespace Sandland.SceneTool.Editor.Views.Handlers
 
             DefineUtils.AddDefine(ScriptDefine);
 
-            SceneToolsService.ClassGeneration.IsAddressablesSupportEnabled = _addressableScenesSupportToggle.value;
-            if (SceneToolsService.ClassGeneration.IsAddressablesSupportEnabled)
+            SceneToolsService.SceneFilesGeneration.IsAddressablesSupportEnabled = _addressableScenesSupportToggle.value;
+            if (SceneToolsService.SceneFilesGeneration.IsAddressablesSupportEnabled)
             {
                 DefineUtils.AddDefine(AddressablesSupportDefine);
             }
@@ -91,15 +103,25 @@ namespace Sandland.SceneTool.Editor.Views.Handlers
                 DefineUtils.RemoveDefine(AddressablesSupportDefine);
             }
 
-            SceneToolsService.ClassGeneration.Directory = _locationText.text;
-            SceneToolsService.ClassGeneration.Namespace = _namespaceText.text;
-            SceneToolsService.ClassGeneration.ClassName = _classNameText.text;
-            SceneToolsService.ClassGeneration.IsAutoGenerateEnabled = _autogenerateOnChangeToggle.value;
+            SceneToolsService.SceneFilesGeneration.ClassDirectory = _classLocationText.text;
+            SceneToolsService.SceneFilesGeneration.Namespace = _namespaceText.text;
+            SceneToolsService.SceneFilesGeneration.ClassName = _classNameText.text;
+            SceneToolsService.SceneFilesGeneration.IsAutoGenerateEnabled = _autogenerateOnChangeToggle.value;
+            
+            SceneToolsService.SceneFilesGeneration.ScriptableObjectDirectory = _scriptableObjectLocationText.text;
+            SceneToolsService.SceneFilesGeneration.ScriptableObjectName = _scriptableObjectNameText.text;
 
-            if (!AssetDatabase.IsValidFolder(_locationText.text))
+            if (!AssetDatabase.IsValidFolder(_classLocationText.text))
             {
-                Directory.CreateDirectory(_locationText.text);
+                Directory.CreateDirectory(_classLocationText.text);
             }
+            
+            if (!AssetDatabase.IsValidFolder(_scriptableObjectLocationText.text))
+            {
+                Directory.CreateDirectory(_scriptableObjectLocationText.text);
+            }
+            
+            SceneClassGenerationListener.GenerateScenesFiles();
         }
 
         private void OnMainToggleChanged(ChangeEvent<bool> args)
@@ -119,10 +141,16 @@ namespace Sandland.SceneTool.Editor.Views.Handlers
             }
         }
 
-        private void OnLocationClicked(ClickEvent args)
+        private void OnClassLocationClicked(ClickEvent args)
         {
             var path = EditorUtility.OpenFolderPanel("Select Folder", "Assets/", string.Empty);
-            _locationText.SetValueWithoutNotify(path.GetRelativePath());
+            _classLocationText.SetValueWithoutNotify(path.GetRelativePath());
+        }
+        
+        private void OnScriptableObjectLocationClicked(ClickEvent args)
+        {
+            var path = EditorUtility.OpenFolderPanel("Select Folder", "Assets/", string.Empty);
+            _scriptableObjectLocationText.SetValueWithoutNotify(path.GetRelativePath());
         }
     }
 }

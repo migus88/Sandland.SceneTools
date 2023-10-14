@@ -3,19 +3,29 @@
     color: var(--primary-text-color);
 }
 
-.block-title #unity-checkmark{
+.block-title #unity-checkmark {
     height: var(--title-font-size);
     width: var(--title-font-size);
+}
+
+.block-title.secondary {
+    font-size: var(--title-secondary-font-size);
+    margin-bottom: var(--small-font-size);
+}
+
+.indented {
+    padding-left: var(--font-size);
 }
 
 .scene-class-generation-property {
     flex-direction: row;
 }
+
 .scene-class-generation-property TextField {
     flex-grow: 1;
 }
 
-#scene-class-location-button {
+#scene-class-location-button, #scene-so-location-button {
     align-self: flex-end;
     min-width: var(--button-min-width);
 }
