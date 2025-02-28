@@ -66,6 +66,13 @@ namespace Sandland.SceneTool.Runtime.Data
     
             return null;
         }
+        
+        public async Awaitable Unload()
+        {
+            await WaitForOperation(
+                SceneManager.UnloadSceneAsync(_sceneName)
+            );
+        }
 
         /// <summary>
         /// Loads the scene asynchronously using the proper method.
