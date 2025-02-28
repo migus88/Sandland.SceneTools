@@ -84,6 +84,20 @@ namespace Sandland.SceneTool.Editor.Listeners
                 return;
             }
 
+            var scenes = GetSceneInfos();
+
+            SceneToolsService.SceneFilesGeneration.CreateClassFile(scenes);
+            SceneToolsService.SceneFilesGeneration.CreateScriptableObjectFile(scenes);
+        }
+
+        public static void GenerateSceneEditorData()
+        {
+            var scenes = GetSceneInfos();
+            SceneToolsService.SceneFilesGeneration.SaveScenesData(scenes);
+        }
+
+        private static List<SceneInfo> GetSceneInfos()
+        {
             var scenes = new List<SceneInfo>();
 
             for (var i = 0; i < EditorBuildSettings.scenes.Length; i++)
@@ -104,8 +118,7 @@ namespace Sandland.SceneTool.Editor.Listeners
             scenes.AddRange(addressableScenes);
 #endif
 
-            SceneToolsService.SceneFilesGeneration.CreateClassFile(scenes);
-            SceneToolsService.SceneFilesGeneration.CreateScriptableObjectFile(scenes);
+            return scenes;
         }
     }
 }
