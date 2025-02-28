@@ -51,7 +51,7 @@ namespace Sandland.SceneTool.Runtime.Data
         /// For built-in scenes, uses SceneManager.
         /// For addressable scenes, uses the Addressables class.
         /// </summary>
-        public async Awaitable LoadScene(LoadSceneMode mode = LoadSceneMode.Single)
+        public async Awaitable Load(LoadSceneMode mode = LoadSceneMode.Single)
         {
             if (string.IsNullOrEmpty(_sceneName) || _sceneType == SceneType.None)
             {
