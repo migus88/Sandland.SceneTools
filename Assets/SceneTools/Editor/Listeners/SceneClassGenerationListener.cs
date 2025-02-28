@@ -109,7 +109,6 @@ namespace Sandland.SceneTool.Editor.Listeners
             }
 
 #if SANDLAND_ADDRESSABLES
-
             var addressableScenes = AddressableAssetSettingsDefaultObject.Settings.groups.SelectMany(g => g.entries)
                 .Where(e => EditorUtility.IsPersistent(e.MainAsset) && e.MainAsset is SceneAsset)
                 .Select(e => SceneInfo.Create.Addressable(e.address, e.address))

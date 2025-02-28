@@ -17,17 +17,27 @@ namespace Sandland.SceneTool.Runtime.Data
     public class SelectableScene
     {
         [UnityEngine.SerializeField] private string _sceneName;
+        [UnityEngine.SerializeField] private string _sceneAddress;
         [UnityEngine.SerializeField] private SceneType _sceneType;
 
         public SelectableScene()
         {
             _sceneName = string.Empty;
+            _sceneAddress = string.Empty;
             _sceneType = SceneType.None;
         }
 
         public SelectableScene(string sceneName, SceneType sceneType)
         {
             _sceneName = sceneName;
+            _sceneAddress = string.Empty;
+            _sceneType = sceneType;
+        }
+
+        public SelectableScene(string sceneName, string sceneAddress, SceneType sceneType)
+        {
+            _sceneName = sceneName;
+            _sceneAddress = sceneAddress;
             _sceneType = sceneType;
         }
         
@@ -97,7 +107,7 @@ namespace Sandland.SceneTool.Runtime.Data
             {
 #if SANDLAND_ADDRESSABLES
                 await WaitForOperationHandle(
-                    Addressables.LoadSceneAsync(_sceneName, mode)
+                    Addressables.LoadSceneAsync(_sceneAddress, mode)
                 );
 #endif
             }

@@ -26,17 +26,26 @@ public class SelectableScenePropertyDrawer : PropertyDrawer
             return;
         }
         
+        var sceneAddressProp = property.FindPropertyRelative("_sceneAddress");
+        
+        if (sceneAddressProp == null || sceneAddressProp.propertyType != SerializedPropertyType.String)
+        {
+            EditorGUI.LabelField(position, label.text, "Missing _sceneAddress string.");
+            return;
+        }
+        
         var sceneTypeProp = property.FindPropertyRelative("_sceneType");
         
         if (sceneTypeProp == null || sceneTypeProp.propertyType != SerializedPropertyType.Enum)
         {
-            EditorGUI.LabelField(position, label.text, "Missing _sceneType string.");
+            EditorGUI.LabelField(position, label.text, "Missing _sceneType enum.");
             return;
         }
         
         InitializeOptions();
 
         var currentName = sceneNameProp.stringValue;
+        var currentAddress = sceneAddressProp.stringValue;
         var currentType = (SceneType)sceneTypeProp.enumValueIndex;
         var currentIndex = 0;
         
@@ -54,6 +63,7 @@ public class SelectableScenePropertyDrawer : PropertyDrawer
         if (selectedIndex != currentIndex)
         {
             sceneNameProp.stringValue = _optionValues[selectedIndex].Name;
+            sceneAddressProp.stringValue = _optionValues[selectedIndex].Address;
             sceneTypeProp.enumValueIndex = (int)_optionValues[selectedIndex].Type;
         }
     }

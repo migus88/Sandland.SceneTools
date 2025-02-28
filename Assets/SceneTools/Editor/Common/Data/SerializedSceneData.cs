@@ -13,6 +13,7 @@ namespace Sandland.SceneTool.Editor.Common.Data
         public class OptionValue
         {
             public string Name;
+            public string Address;
             public SceneType Type;
 
             public OptionValue() { }
@@ -20,6 +21,14 @@ namespace Sandland.SceneTool.Editor.Common.Data
             public OptionValue(string name, SceneType type)
             {
                 Name = name;
+                Address = string.Empty;
+                Type = type;
+            }
+            
+            public OptionValue(string name, string address, SceneType type)
+            {
+                Name = name;
+                Address = address;
                 Type = type;
             }
         }

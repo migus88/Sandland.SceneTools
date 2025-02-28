@@ -141,7 +141,7 @@ namespace Sandland.SceneTool.Editor.Services
 
                 if (!AssetDatabase.IsValidFolder(ClassDirectory))
                 {
-                    System.IO.Directory.CreateDirectory(ClassDirectory);
+                    Directory.CreateDirectory(ClassDirectory);
                 }
 
                 File.WriteAllText(finalPath, content);
@@ -169,7 +169,7 @@ namespace Sandland.SceneTool.Editor.Services
                 foreach (var scene in addressableScenes)
                 {
                     options.Add($"{nameof(SceneType.Addressable)}: {scene.Name}");
-                    optionValues.Add(new SerializedScenesData.OptionValue(scene.Address, SceneType.Addressable));
+                    optionValues.Add(new SerializedScenesData.OptionValue(scene.Name, scene.Address, SceneType.Addressable));
                 }
 
                 var scenesData = new SerializedScenesData { Options = options, OptionValues = optionValues };
