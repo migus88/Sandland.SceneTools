@@ -45,6 +45,27 @@ namespace Sandland.SceneTool.Runtime.Data
             var scene = SceneManager.GetSceneByName(_sceneName);
             return scene.IsValid() && scene.isLoaded;
         }
+        
+        public T GetComponentInScene<T>() where T : UnityEngine.Component
+        {
+            var scene = SceneManager.GetSceneByName(_sceneName);
+            if (!scene.IsValid() || !scene.isLoaded)
+            {
+                UnityEngine.Debug.LogError($"Scene '{_sceneName}' is not valid or not loaded.");
+                return null;
+            }
+
+            foreach (UnityEngine.GameObject rootObj in scene.GetRootGameObjects())
+            {
+                T component = rootObj.GetComponentInChildren<T>(true);
+                if (component != null)
+                {
+                    return component;
+                }
+            }
+    
+            return null;
+        }
 
         /// <summary>
         /// Loads the scene asynchronously using the proper method.
