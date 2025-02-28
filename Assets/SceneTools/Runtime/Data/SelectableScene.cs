@@ -30,6 +30,21 @@ namespace Sandland.SceneTool.Runtime.Data
             _sceneName = sceneName;
             _sceneType = sceneType;
         }
+        
+        /// <summary>
+        /// Tells if the scene is loaded.
+        /// </summary>
+        public bool IsLoaded()
+        {
+            if (string.IsNullOrEmpty(_sceneName))
+            {
+                UnityEngine.Debug.LogWarning("SelectableScene: Scene name is not set.");
+                return false;
+            }
+            
+            var scene = SceneManager.GetSceneByName(_sceneName);
+            return scene.IsValid() && scene.isLoaded;
+        }
 
         /// <summary>
         /// Loads the scene asynchronously using the proper method.
