@@ -4,6 +4,7 @@ using System.Linq;
 using Sandland.SceneTool.Editor.Common.Data;
 using Sandland.SceneTool.Editor.Common.Drawers;
 using Sandland.SceneTool.Editor.Common.Utils;
+using Sandland.SceneTool.Runtime.Enums;
 using SceneTools.Runtime.Settings;
 using UnityEditor;
 using UnityEngine;
@@ -157,17 +158,17 @@ namespace Sandland.SceneTool.Editor.Services
                 var addressableScenes = scenes.Where(s => !string.IsNullOrWhiteSpace(s.Address));
 
                 var options = new List<string>();
-                var optionValues = new List<string>();
+                var optionValues = new List<SerializedScenesData.OptionValue>();
 
                 foreach (var scene in builtInScenes)
                 {
-                    options.Add("Build: " + scene.Name);
-                    optionValues.Add("build--" + scene.Name);
+                    options.Add($"{nameof(SceneType.BuiltIn)}: {scene.Name}");
+                    optionValues.Add(new SerializedScenesData.OptionValue(scene.Name, SceneType.BuiltIn));
                 }
                 foreach (var scene in addressableScenes)
                 {
-                    options.Add("Addressable: " + scene.Address);
-                    optionValues.Add("addressable--" + scene.Address);
+                    options.Add($"{nameof(SceneType.Addressable)}: {scene.Address}");
+                    optionValues.Add(new SerializedScenesData.OptionValue(scene.Address, SceneType.Addressable));
                 }
 
                 var scenesData = new SerializedScenesData { Options = options, OptionValues = optionValues };

@@ -1,3 +1,4 @@
+using Sandland.SceneTool.Runtime.Enums;
 using UnityEngine.SceneManagement;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -15,47 +16,48 @@ namespace Sandland.SceneTool.Runtime.Data
     [System.Serializable]
     public class SelectableScene
     {
-        // This string is saved in the format "build--SceneName" or "addressable--SceneAddress"
-        [UnityEngine.SerializeField] private string _sceneValue;
+        [UnityEngine.SerializeField] private string _sceneName;
+        [UnityEngine.SerializeField] private SceneType _sceneType;
+
+        public SelectableScene()
+        {
+            _sceneName = string.Empty;
+            _sceneType = SceneType.None;
+        }
+
+        public SelectableScene(string sceneName, SceneType sceneType)
+        {
+            _sceneName = sceneName;
+            _sceneType = sceneType;
+        }
 
         /// <summary>
         /// Loads the scene asynchronously using the proper method.
         /// For built-in scenes, uses SceneManager.
-        /// For addressable scenes, uses Addressables.
+        /// For addressable scenes, uses the Addressables class.
         /// </summary>
         public async Awaitable LoadScene(LoadSceneMode mode = LoadSceneMode.Single)
         {
-            if (string.IsNullOrEmpty(_sceneValue))
+            if (string.IsNullOrEmpty(_sceneName) || _sceneType == SceneType.None)
             {
-                UnityEngine.Debug.LogError("SelectableScene: SceneValue is not set.");
+                UnityEngine.Debug.LogError("SelectableScene: Incorrect scene data.");
                 return;
             }
 
-            var parts = _sceneValue.Split(new[] { "--" }, System.StringSplitOptions.None);
-            if (parts.Length != 2)
-            {
-                UnityEngine.Debug.LogError("SelectableScene: SceneValue format is invalid.");
-                return;
-            }
-
-            var type = parts[0].ToLower();
-            var sceneName = parts[1];
-
-            // TODO: extract types into consts and reuse them
-            if (type == "build")
+            if (_sceneType == SceneType.BuiltIn)
             {
                 await WaitForOperation(
-                    SceneManager.LoadSceneAsync(sceneName, mode)
+                    SceneManager.LoadSceneAsync(_sceneName, mode)
                 );
             }
-#if SANDLAND_ADDRESSABLES
-            else if (type == "addressable")
+            else if (_sceneType == SceneType.Addressable)
             {
+#if SANDLAND_ADDRESSABLES
                 await WaitForOperationHandle(
-                    Addressables.LoadSceneAsync(sceneName, mode)
+                    Addressables.LoadSceneAsync(_sceneName, mode)
                 );
-            }
 #endif
+            }
             else
             {
                 UnityEngine.Debug.LogError("SelectableScene: Unknown scene type.");
