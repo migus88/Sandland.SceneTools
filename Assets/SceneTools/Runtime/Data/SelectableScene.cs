@@ -137,7 +137,7 @@ namespace Sandland.SceneTool.Runtime.Data
         private async Awaitable WaitForOperationHandle(AsyncOperationHandle operation)
         {
 #if SANDLAND_UNITASK
-            await operation;
+            await operation.ToUniTask();
 #else
             await operation.Task;
 #endif
