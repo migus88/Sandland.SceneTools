@@ -1,16 +1,16 @@
 using Sandland.SceneTool.Editor.Common.Data;
-using Sandland.SceneTool.Editor.Common.Utils;
 using Sandland.SceneTool.Editor.Services;
-using UnityEditor;
-using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace Sandland.SceneTool.Editor.Views
 {
-    internal class FavoritesButton : VisualElement
+#if UNITY_6000_0_OR_NEWER
+    [UxmlElement("FavoritesButton")]
+#endif
+    internal partial class FavoritesButton : VisualElement
     {
         private const string FavoriteClassName = "favorite";
-        
+
         public bool IsFavorite { get; private set; }
 
         //private Image _starImage;
@@ -46,7 +46,7 @@ namespace Sandland.SceneTool.Editor.Views
         public void SetState(bool isFavorite)
         {
             IsFavorite = isFavorite;
-            
+
             if (IsFavorite)
             {
                 AddToClassList(FavoriteClassName);
@@ -57,8 +57,10 @@ namespace Sandland.SceneTool.Editor.Views
             }
         }
 
+#if !UNITY_6000_0_OR_NEWER
         public new class UxmlFactory : UxmlFactory<FavoritesButton, UxmlTraits>
         {
         }
+#endif
     }
 }

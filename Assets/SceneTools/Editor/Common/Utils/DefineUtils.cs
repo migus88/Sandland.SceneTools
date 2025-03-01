@@ -1,4 +1,5 @@
 using UnityEditor;
+using UnityEditor.Build;
 
 namespace Sandland.SceneTool.Editor.Common.Utils
 {
@@ -7,7 +8,8 @@ namespace Sandland.SceneTool.Editor.Common.Utils
         public static void AddDefine(string define)
         {
             var targetGroup = EditorUserBuildSettings.selectedBuildTargetGroup;
-            var defines = PlayerSettings.GetScriptingDefineSymbolsForGroup(targetGroup);
+            var namedBuildTarget = NamedBuildTarget.FromBuildTargetGroup(targetGroup); 
+            var defines = PlayerSettings.GetScriptingDefineSymbols(namedBuildTarget);
 
             if (defines.Contains(define))
             {
@@ -15,13 +17,14 @@ namespace Sandland.SceneTool.Editor.Common.Utils
             }
 
             defines += $";{define}";
-            PlayerSettings.SetScriptingDefineSymbolsForGroup(targetGroup, defines);
+            PlayerSettings.SetScriptingDefineSymbols(namedBuildTarget, defines);
         }
 
         public static void RemoveDefine(string define)
         {
             var targetGroup = EditorUserBuildSettings.selectedBuildTargetGroup;
-            var defines = PlayerSettings.GetScriptingDefineSymbolsForGroup(targetGroup);
+            var namedBuildTarget = NamedBuildTarget.FromBuildTargetGroup(targetGroup);
+            var defines = PlayerSettings.GetScriptingDefineSymbols(namedBuildTarget);
 
             if (!defines.Contains(define))
             {
@@ -29,7 +32,7 @@ namespace Sandland.SceneTool.Editor.Common.Utils
             }
 
             defines = defines.Replace(define + ";", string.Empty).Replace(define, string.Empty);
-            PlayerSettings.SetScriptingDefineSymbolsForGroup(targetGroup, defines);
+            PlayerSettings.SetScriptingDefineSymbols(namedBuildTarget, defines);
         }
     }
 }
